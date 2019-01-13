@@ -2,13 +2,13 @@ body {
   background: #292d2c;
   color: #7a7a7a;
 
-  font-family: "Lancelot", cursive;
-  font-size: 150%;
+  /* font-family: "Lancelot", cursive;
+  font-size: 150%; */
 }
 
-.date-posted {
+/* .date-posted {
   font-size: 100%;
-}
+} */
 
 .blog-card {
   /* Add shadows to create the "card" effect */
@@ -31,7 +31,12 @@ body {
 
   /* font-family: "Lancelot", cursive; */
 
-  font-family: "Forum", cursive;
-  font-size: 250%;
+  /* font-family: "Forum", cursive;
+  font-size: 250%; */
   padding: 0.5em;
+}
+
+input,
+textarea {
+  margin-bottom: 2em;
 }

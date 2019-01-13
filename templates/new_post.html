@@ -1,0 +1,45 @@
+{% extends "base_template.html" %} {% block content %}
+
+<div class="row">
+  <div class="col text-center">
+    <h1 class="title">Creat a new post below</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <form method="post">
+      <input
+        type="text"
+        name="title"
+        class="form-control text-center"
+        placeholder="Post title"
+        aria-label="Post title"
+        aria-describedby="basic-addon2"
+      />
+
+      <textarea
+        name="content"
+        class="form-control"
+        aria-label="With textarea"
+      ></textarea>
+      <div class="row">
+        <div class="col">
+          <a href="{{ url_for('posts.get_posts') }}">
+            <button type="button" class="btn btn-primary btn-block btn-lg">
+              Back
+            </button>
+          </a>
+        </div>
+
+        <div class="col">
+          <button type="submit" class="btn btn-success btn-block btn-lg">
+            Post
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
