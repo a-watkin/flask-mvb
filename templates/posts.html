@@ -8,13 +8,11 @@
 
 {% for post in posts %}
 <div class="row">
-  <div class="col">
-    <div class="blog-entry">
-      <h2 class="text-center">{{ post["title"] }}</h2>
-      <h6>Posted: {{ post["datetime_posted"][0:19] }}</h6>
+  <div class="col blog-card">
+    <h2 class="text-center">{{ post["title"] }}</h2>
+    <h6>Posted: {{ post["datetime_posted"][0:19] }}</h6>
 
-      <p>{{ post["content"] }}</p>
-    </div>
+    <p>{{ post["content"] }}</p>
   </div>
 </div>
 {% endfor %} {% endblock %}
