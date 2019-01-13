@@ -1,0 +1,20 @@
+{% extends "base_template.html" %} {% block content %}
+
+<!-- <div class="row">
+  <div class="col text-center"><h1>Post will be displayed here</h1></div>
+</div> -->
+
+<!-- <h2>{{ posts }}</h2> -->
+
+{% for post in posts %}
+<div class="row">
+  <div class="col">
+    <div class="blog-entry">
+      <h2 class="text-center">{{ post["title"] }}</h2>
+      <h6>Posted: {{ post["datetime_posted"][0:19] }}</h6>
+
+      <p>{{ post["content"] }}</p>
+    </div>
+  </div>
+</div>
+{% endfor %} {% endblock %}

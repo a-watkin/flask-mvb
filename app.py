@@ -2,7 +2,10 @@ import subprocess
 from flask import Flask
 from blog.post_routes import post_blueprint
 
-app = Flask(__name__, template_folder='blog/templates')
+app = Flask(__name__)
+
+# template_folder='blog/templates',
+# static_folder = 'blog/static'
 
 app.config.update(
     TESTING=True,
