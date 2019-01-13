@@ -1,6 +1,13 @@
 body {
   background: #292d2c;
   color: #7a7a7a;
+
+  font-family: "Lancelot", cursive;
+  font-size: 150%;
+}
+
+.date-posted {
+  font-size: 100%;
 }
 
 .blog-card {
@@ -17,4 +24,14 @@ body {
 .blog-card:hover {
   /* box-shadow: 2px 4px 8px 8px #545756; */
   box-shadow: 0px 0px 22px -3px #7a7a7a;
+}
+
+.title {
+  /* font-family: "Tenor Sans", sans-serif; */
+
+  /* font-family: "Lancelot", cursive; */
+
+  font-family: "Forum", cursive;
+  font-size: 250%;
+  padding: 0.5em;
 }
