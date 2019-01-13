@@ -141,5 +141,7 @@ FLICKR_API_KEYS.py
 *.pickle
 .db-journal
 
+*.pyc
+*.db
 # server env directory
 /photo

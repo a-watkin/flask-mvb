@@ -146,8 +146,8 @@ class Post(object):
 if __name__ == "__main__":
     # p = Post(title='test')
     p = Post(
-        title='hello world',
-        content='some rambling nonsense probably'
+        title='hello world 2',
+        content='some rambling nonsense again probably'
     )
 
     p.create_post()
