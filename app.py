@@ -2,7 +2,7 @@ import subprocess
 from flask import Flask
 from blog.post_routes import post_blueprint
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='blog/templates')
 
 app.config.update(
     TESTING=True,
@@ -10,11 +10,6 @@ app.config.update(
 )
 
 app.register_blueprint(post_blueprint, url_prefix="/posts")
-
-
-@app.route('/')
-def hello_world():
-    return 'sure does!'
 
 
 if __name__ == '__main__':

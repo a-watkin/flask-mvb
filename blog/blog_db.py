@@ -128,24 +128,24 @@ class Database(object):
 if __name__ == "__main__":
     db = Database()
 
-    db.make_query(
-        '''
-        INSERT into user (username)
-        VALUES ('a')
-        '''
-    )
+    # db.make_query(
+    #     '''
+    #     INSERT into user (username)
+    #     VALUES ('a')
+    #     '''
+    # )
 
     import datetime
     from utils import get_id
 
     db.insert_data(
         table='post',
-        username='test',
+        post_id=get_id(),
+        username='a',
         title='test',
         content='test post',
         date_posted=datetime.datetime.now(),
-        date_published=None,
-        post_id=get_id()
+        date_published=None
     )
 
     # print(db.make_query(

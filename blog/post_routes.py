@@ -9,4 +9,4 @@ post_blueprint = Blueprint('posts', __name__)
 def get_posts():
     p = Post()
     posts = p.get_posts()
-    return jsonify(posts)
+    return render_template('posts.html', posts=posts), 200
