@@ -73,7 +73,13 @@ class Post(object):
         '''
 
     def get_posts(self):
-        data = self.db.get_rows('post')
+        data = self.db.get_query_as_list(
+            '''
+            SELECT * FROM post ORDER BY datetime_posted DESC
+            '''
+        )
+
+        # data = self.db.get_rows('post')
         return data
 
     def get_post(self, post_id):
