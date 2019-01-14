@@ -40,16 +40,30 @@ def create_post():
 
 
 @post_blueprint.route('/edit/<int:post_id>', methods=['GET', 'POST'])
-def edit_post():
+def edit_post(post_id):
     if request.method == 'GET':
-        return render_template('new_post.html'), 200
+        p = Post()
+        post = p.get_post(post_id)
+
+        return render_template('edit_post.html', post=post), 200
+
     if request.method == 'POST':
+        print('edit_post ', post_id)
+        p = Post()
+        p = p.get_and_set_post(post_id)
+
         # get the values
         title = request.form['title']
         content = request.form['content']
         # make the psot
-        p = Post(title=title, content=content)
-        p.create_post()
+        # p = Post(title=title, content=content)
+        if title:
+            p.title = title
+
+        if content:
+            p.content = content
+
+        p.update_post(post_id)
 
         if p.get_post(p.post_id):
             # if you have a status code here it doesn't redirect
