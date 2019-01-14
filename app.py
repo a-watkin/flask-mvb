@@ -1,10 +1,12 @@
 import subprocess
 from flask import Flask
-from flaskext.markdown import Markdown
+# this only sort of works
+# from flaskext.markdown import Markdown
+
 from blog.post_routes import post_blueprint
 
 app = Flask(__name__)
-Markdown(app)
+# Markdown(app)
 
 # template_folder='blog/templates',
 # static_folder = 'blog/static'

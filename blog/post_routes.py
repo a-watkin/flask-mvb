@@ -1,6 +1,11 @@
 
 from flask import Blueprint, jsonify, request, render_template, redirect, url_for
+
+import mistune
 from .post import Post
+
+# markdown = mistune.Markdown()
+
 
 post_blueprint = Blueprint('posts', __name__)
 
@@ -9,6 +14,9 @@ post_blueprint = Blueprint('posts', __name__)
 def get_posts():
     p = Post()
     posts = p.get_posts()
+    markdown = mistune.Markdown()
+    for post in posts:
+        post['content'] = markdown(post['content'])
     return render_template('posts.html', posts=posts), 200
 
 
