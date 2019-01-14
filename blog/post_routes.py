@@ -12,21 +12,20 @@ def get_posts():
     return render_template('posts.html', posts=posts), 200
 
 
-@post_blueprint.route('/new', methods=['GET', 'POST'])
+@post_blueprint.route('/new/', methods=['GET', 'POST'])
 def create_post():
-
     if request.method == 'GET':
         return render_template('new_post.html'), 200
     if request.method == 'POST':
+        # get the values
         title = request.form['title']
         content = request.form['content']
-        print('title ', title, '\n', 'content ', content)
+        # make the psot
         p = Post(title=title, content=content)
-        print(p)
         p.create_post()
 
         if p.get_post(p.post_id):
-            # redirect doesn't work here for some reason
-            return get_posts()
+            # if you have a status code here it doesn't redirect
+            return redirect(url_for('posts.get_posts'))
         else:
-            return 'Oh no something went wrong :('
+            return 'Oh no something went wrong :(', 404

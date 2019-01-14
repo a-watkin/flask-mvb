@@ -6,6 +6,12 @@ body {
   font-size: 150%; */
 }
 
+#title-input,
+#content-input {
+  background: #081517;
+  color: #7a7a7a;
+}
+
 /* .date-posted {
   font-size: 100%;
 } */
