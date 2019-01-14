@@ -4,6 +4,7 @@ from flask import Flask
 # from flaskext.markdown import Markdown
 
 from blog.post_routes import post_blueprint
+from blog.user_routes import user_blueprint
 
 app = Flask(__name__)
 # Markdown(app)
@@ -11,13 +12,13 @@ app = Flask(__name__)
 # template_folder='blog/templates',
 # static_folder = 'blog/static'
 
+app.register_blueprint(post_blueprint, url_prefix="/posts")
+app.register_blueprint(user_blueprint, url_prefix="/user")
+
 app.config.update(
     TESTING=True,
     SECRET_KEY='whyohwhy'
 )
-
-app.register_blueprint(post_blueprint, url_prefix="/posts")
-
 
 if __name__ == '__main__':
     export_settings = [

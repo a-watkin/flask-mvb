@@ -1,5 +1,7 @@
 {% extends "base_template.html" %} {% block content %}
 
+<!-- <h1>{{ post }}</h1> -->
+
 <div class="row">
   <div class="col blog-card">
     <div class="row">
@@ -16,11 +18,12 @@
       <div class="col">
         <h6 class="date-posted text-center">
           <!-- slice of the datetime value -->
-          Posted @ {{ post[0]["datetime_posted"][0:19] }}
+          Posted @ {{ post[0]["datetime_posted"][0:16] }}
         </h6>
       </div>
     </div>
 
+    {% if session %}
     <div class="row">
       <div class="col text-right">
         <a
@@ -36,6 +39,7 @@
         </a>
       </div>
     </div>
+    {% endif %}
   </div>
 </div>
 

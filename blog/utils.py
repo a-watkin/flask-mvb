@@ -1,5 +1,19 @@
 import urllib.parse
 import uuid
+from functools import wraps
+
+from flask import session
+
+
+def login_required(method):
+    @wraps(method)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return method(*args, **kwargs)
+        else:
+            flash('You need to log in first.')
+            return redirect(url_for('user.login'))
+    return wrap
 
 
 def get_id():

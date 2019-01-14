@@ -1,6 +1,13 @@
-from blog_db import Database
 
-from password_util import PasswordUtil
+
+try:
+    from .blog_db import Database
+
+    from .password_util import PasswordUtil
+except Exception as e:
+    from blog_db import Database
+
+    from password_util import PasswordUtil
 
 
 class User(object):
@@ -26,7 +33,12 @@ class User(object):
         Returns the hasehd password from the database for the given username.
         """
         db_resp = self.db.get_row('user', 'username', self.username)
-        return db_resp[2]
+
+        # print(db_resp)
+        if db_resp:
+            return db_resp[0]['hash']
+        # changed here because the db no longer returns a tuple
+        # return db_resp[2]
 
     def insert_hased_password(self, password):
         """
@@ -43,7 +55,7 @@ class User(object):
             WHERE username = "{}"
             '''.format(hased_password, self.username)
         )
-        print(hased_password)
+        # print(hased_password)
 
     def check_password(self):
         hashed_password = self.get_hashed_password(self.username)
@@ -51,8 +63,11 @@ class User(object):
 
 
 def main():
-    u = User('a')
+    u = User('a', 'a')
     # hased password has been inserted
+    print(u.get_hashed_password('a'))
+
+    print(u.check_password())
 
 
 if __name__ == '__main__':
