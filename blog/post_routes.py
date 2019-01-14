@@ -4,9 +4,6 @@ from flask import Blueprint, jsonify, request, render_template, redirect, url_fo
 import mistune
 from .post import Post
 
-# markdown = mistune.Markdown()
-
-
 post_blueprint = Blueprint('posts', __name__)
 
 
@@ -22,8 +19,6 @@ def get_posts():
 
 @post_blueprint.route('/<int:post_id>', methods=['GET'])
 def get_post(post_id):
-    print('what the actual fuck???')
-    # post_id = int(post_id)
     p = Post()
     post = p.get_post(post_id)
     if post:
@@ -86,4 +81,6 @@ def edit_post(post_id):
 
 @post_blueprint.route('/delete/<int:post_id>', methods=['GET', 'POST'])
 def delete_post(post_id):
-    pass
+    p = Post()
+    p.remove_post(post_id)
+    return redirect(url_for('posts.get_posts'))
