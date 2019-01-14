@@ -140,7 +140,7 @@ FLICKR_API_KEYS.py
 /eigi-photo-list-data
 *.pickle
 .db-journal
-
+.pyc
 *.pyc
 *.db
 # server env directory

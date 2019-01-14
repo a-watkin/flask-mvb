@@ -46,3 +46,8 @@ input,
 textarea {
   margin-bottom: 2em;
 }
+
+.edit-link {
+  color: #7a7a7a;
+  padding-bottom: 1em;
+}
