@@ -1,0 +1,43 @@
+{% extends "base_template.html" %} {% block content %}
+
+<h1>{{ post }}</h1>
+
+<div class="row">
+  <div class="col blog-card">
+    <div class="row">
+      <div class="col">
+        <h2 class="title text-center">{{ post[0]["title"] }}</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">{{ post[0]["content"] | safe }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <h6 class="date-posted text-center">
+          Posted @ {{ post[0]["datetime_posted"][0:19] }}
+        </h6>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col text-right">
+        <a
+          class="edit-link"
+          href="{{ url_for('posts.edit_post', post_id=post[0]['post_id']) }}"
+        >
+          <i class="far fa-edit"></i>
+        </a>
+        <a
+          href="{{ url_for('posts.delete_post', post_id=post[0]['post_id']) }}"
+        >
+          <i class="far fa-trash-alt"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

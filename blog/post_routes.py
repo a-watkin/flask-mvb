@@ -20,6 +20,18 @@ def get_posts():
     return render_template('posts.html', posts=posts), 200
 
 
+@post_blueprint.route('/<int:post_id>', methods=['GET'])
+def get_post(post_id):
+    print('what the actual fuck???')
+    # post_id = int(post_id)
+    p = Post()
+    post = p.get_post(post_id)
+    if post:
+        markdown = mistune.Markdown()
+        post[0]['content'] = markdown(post[0]['content'])
+    return render_template('post.html', post=post), 200
+
+
 @post_blueprint.route('/new/', methods=['GET', 'POST'])
 def create_post():
     if request.method == 'GET':
@@ -70,3 +82,8 @@ def edit_post(post_id):
             return redirect(url_for('posts.get_posts'))
         else:
             return 'Oh no something went wrong :(', 404
+
+
+@post_blueprint.route('/delete/<int:post_id>', methods=['GET', 'POST'])
+def delete_post(post_id):
+    pass
