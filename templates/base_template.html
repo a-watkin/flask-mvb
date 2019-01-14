@@ -61,30 +61,54 @@
     <title>Minimal viable blog</title>
   </head>
 
-  <nav class="navbar">
-    <ul class="navbar-nav nav-fill w-100"></ul>
-    <li class="nav-item mx-auto">
-    <a href="{{ url_for('posts.get_posts') }}">BLOG</a>
-    </li>
+  <nav class="navbar navbar-dark">
+    <a href="/">
+      <img
+        class="img-fluid"
+        src="{{ url_for('static', filename='favicon.ico') }}"
+        width="40"
+        height="40"
+        alt=""
+      />
+    </a>
 
-    <li class="nav-item mx-auto">
-    <a href="{{ url_for('posts.create_post') }}">NEW POST</a>
-    </li>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarText"
+      aria-controls="navbarText"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
+    <div class="collapse navbar-collapse text-center" id="navbarText">
+      <ul class="navbar-nav nav-fill w-100">
+        <li class="nav-item active">
+          <a class="nav-link" href="{{ url_for('posts.get_posts') }}">BLOG</a>
+        </li>
 
-    <!-- Login/logout -->
-    {% if session %}
-    <li class="nav-item mx-auto">
-      <a class="nav-link" href="{{url_for('user.logout')}}">Logout</a>
-    </li>
-    {% else %}
-    
-    <li class="nav-item mx-auto">
-      <a class="nav-link" href="{{url_for('user.login')}}">Login</a>
-    </li>
-    {% endif %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('posts.create_post') }}"
+            >New post</a
+          >
+        </li>
 
-    </ul>
+        <!-- Login/logout -->
+        {% if session %}
+        <li class="nav-item mx-auto">
+          <a class="nav-link" href="{{ url_for('user.logout') }}">Logout</a>
+        </li>
+        {% else %}
+
+        <li class="nav-item mx-auto">
+          <a class="nav-link" href="{{ url_for('user.login') }}">Login</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
   </nav>
 
   <body>
