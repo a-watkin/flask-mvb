@@ -97,20 +97,18 @@
           <a class="nav-link" href="{{ url_for('posts.get_posts') }}">Blog</a>
         </li>
 
+        {% if session %}
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('posts.create_post') }}"
             >New post</a
           >
         </li>
 
-        {% if session %}
         <li class="nav-item mx-auto">
           <a class="nav-link" href="{{ url_for('user.account') }}">Account</a>
         </li>
-        {% endif %}
 
         <!-- Login/logout -->
-        {% if session %}
         <li class="nav-item mx-auto">
           <a class="nav-link" href="{{ url_for('user.logout') }}">Logout</a>
         </li>
