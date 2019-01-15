@@ -1,7 +1,33 @@
 {% extends "base_template.html" %} {% block content %}
 
 <!-- loop over post data -->
-{% for post in posts %}
+{% for post in posts %} {% if session %}
+<div class="row">
+  <div class="col blog-card">
+    <!-- used to pass post_id to jQuery -->
+    <span id="postID" hidden>{{ post["post_id"] }}</span>
+    <div class="row">
+      <div class="col">
+        <h2 class="title text-center">{{ post["title"] }}</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- injects markdown, can also inject HTML -->
+      <div class="col">{{ post["content"] | safe }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <h6 class="date-posted text-center">
+          Posted @ {{ post["datetime_posted"][0:16] }}
+        </h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% elif post['datetime_published'] is not none %}
 
 <div class="row">
   <div class="col blog-card">
@@ -28,4 +54,4 @@
   </div>
 </div>
 
-{% endfor %} {% endblock %}
+{% endif %} {% endfor %} {% endblock %}
