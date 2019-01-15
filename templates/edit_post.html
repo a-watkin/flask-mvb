@@ -9,11 +9,15 @@
 <div class="row">
   <div class="col">
     <form method="post">
+      <div class="row">
+        <div class="col">Publish? <input type="checkbox" name="publish" /></div>
+      </div>
+
       <input id="title-input" type="text" autocomplete="off" name="title"
       class="form-control text-center" value={{
         post[0]["title"]
       }}
-      aria-label="Post title" aria-describedby="basic-addon2" />
+      aria-label="Post title" aria-describedby="basic-addon2" required />
 
       <textarea
         id="content-input"
@@ -21,6 +25,7 @@
         name="content"
         class="form-control"
         aria-label="With textarea"
+        required
         >{{ post[0]["content"] }}</textarea
       >
       <div class="row">
