@@ -121,19 +121,33 @@ class Post(object):
         """
 
         if self.get_post(post_id):
-            self.db.make_query(
-                '''
+            # self.db.make_query(
+
+            query_string = '''
                 UPDATE post
-                SET title = "{}", content = "{}", datetime_posted = "{}", datetime_published = "{}"
-                WHERE post_id = {}
-                '''.format(
-                    self.title,
-                    self.content,
-                    self.datetime_posted,
-                    self.datetime_published,
-                    self.post_id
-                )
+                SET title = ?, content = ?, datetime_posted = ?, datetime_published = ?
+                WHERE post_id = ?
+                '''
+            # .format(
+            #         self.title,
+            #         self.content,
+            #         self.datetime_posted,
+            #         self.datetime_published,
+            #         self.post_id
+            #     )
+            # )
+
+            data = (
+                self.title,
+                self.content,
+                self.datetime_posted,
+                self.datetime_published,
+                self.post_id
             )
+
+            print(data)
+
+            self.db.make_query(query_string, data)
 
             return True
         else:

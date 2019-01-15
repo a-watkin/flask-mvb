@@ -57,6 +57,10 @@ textarea {
   padding-bottom: 1em;
 }
 
+.edit-link:hover {
+  color: green;
+}
+
 nav {
   background: #081517;
 }

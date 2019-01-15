@@ -30,12 +30,14 @@
           class="edit-link"
           href="{{ url_for('posts.edit_post', post_id=post[0]['post_id']) }}"
         >
-          <i class="far fa-edit"></i>
+          <i class="far fa-edit fa-1x"></i>
         </a>
+
         <a
+          class="edit-link"
           href="{{ url_for('posts.delete_post', post_id=post[0]['post_id']) }}"
         >
-          <i class="far fa-trash-alt"></i>
+          <i class="far fa-trash-alt fa-1x"></i>
         </a>
       </div>
     </div>

@@ -29,6 +29,7 @@ def get_post(post_id):
 
 @post_blueprint.route('/new/', methods=['GET', 'POST'])
 def create_post():
+    print('hello from create post ')
     if request.method == 'GET':
         return render_template('new_post.html'), 200
     if request.method == 'POST':
@@ -62,6 +63,9 @@ def edit_post(post_id):
         # get the values
         title = request.form['title']
         content = request.form['content']
+
+        print('\n', content)
+
         # make the psot
         # p = Post(title=title, content=content)
         if title:
