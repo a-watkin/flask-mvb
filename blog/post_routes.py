@@ -1,3 +1,4 @@
+import datetime
 
 from flask import Blueprint, jsonify, request, render_template, redirect, url_for
 
@@ -36,8 +37,13 @@ def create_post():
         # get the values
         title = request.form['title']
         content = request.form['content']
-        # make the psot
+
         p = Post(title=title, content=content)
+
+        if 'publish' in request.form:
+            publish = datetime.datetime.now()
+            p.datetime_published = publish
+
         p.create_post()
 
         if p.get_post(p.post_id):
@@ -64,15 +70,11 @@ def edit_post(post_id):
         title = request.form['title']
         content = request.form['content']
 
-        print('\n', content)
+        p.title = title
+        p.content = content
 
-        # make the psot
-        # p = Post(title=title, content=content)
-        if title:
-            p.title = title
-
-        if content:
-            p.content = content
+        if 'publish' in request.form:
+            p.datetime_published = datetime.datetime.now()
 
         p.update_post(post_id)
 

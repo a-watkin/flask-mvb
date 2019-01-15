@@ -108,34 +108,15 @@ class Post(object):
         )
 
     def update_post(self, post_id):
-        # these values are ok
-        # print('update_post, ',
-        #       post_id,
-        #       self.title,
-        #       self.content,
-        #       self.datetime_posted,
-        #       self.datetime_published,
-        #       self.post_id)
         """
         post_id shouldn't change.
         """
-
         if self.get_post(post_id):
-            # self.db.make_query(
-
             query_string = '''
                 UPDATE post
                 SET title = ?, content = ?, datetime_posted = ?, datetime_published = ?
                 WHERE post_id = ?
                 '''
-            # .format(
-            #         self.title,
-            #         self.content,
-            #         self.datetime_posted,
-            #         self.datetime_published,
-            #         self.post_id
-            #     )
-            # )
 
             data = (
                 self.title,
@@ -145,25 +126,42 @@ class Post(object):
                 self.post_id
             )
 
-            print(data)
-
-            self.db.make_query(query_string, data)
+            self.db.make_sanitized_query(query_string, data)
 
             return True
         else:
             return False
 
-    def remove_post(self, post_id):
-        self.db.make_query(
-            '''
-            DELETE FROM post WHERE post_id = "{}";
-            '''.format(post_id)
+    def save_deleted_post(self):
+        print(self)
+
+        self.db.insert_data(
+            table='deleted_post',
+            post_id=self.post_id,
+            username=self.username,
+            title=self.title,
+            content=self.content,
+            datetime_posted=self.datetime_posted,
+            datetime_published=self.datetime_published
         )
 
-        if self.get_post(post_id):
-            return False
+    def remove_post(self, post_id):
+        post_data = self.get_post(post_id)
 
-        return True
+        if post_data:
+            p = Post(post_data[0])
+            p.save_deleted_post()
+
+            self.db.make_query(
+                '''
+                DELETE FROM post WHERE post_id = "{}";
+                '''.format(post_id)
+            )
+
+            if self.get_post(post_id):
+                return True
+
+        return False
 
 
 if __name__ == "__main__":

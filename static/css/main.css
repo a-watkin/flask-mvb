@@ -1,6 +1,6 @@
 body {
   background: #292d2c;
-  color: #7a7a7a;
+  color: white;
 
   /* font-family: "Lancelot", cursive;
   font-size: 150%; */
@@ -71,4 +71,8 @@ nav {
 
 nav a:hover {
   color: #7a7a7a;
+}
+
+pre code {
+  color: green;
 }

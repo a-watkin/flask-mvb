@@ -31,6 +31,20 @@ def create_database(db_name):
 
     cursor.execute(
         '''
+        CREATE TABLE IF NOT EXISTS deleted_post(
+            post_id INT PRIMARY KEY UNIQUE NOT NULL,
+            username TEXT NOT NULL,
+            title TEXT,
+            content TEXT,
+            datetime_posted TEXT,
+            datetime_published TEXT,
+            FOREIGN KEY(username) REFERENCES user(username) ON DELETE CASCADE
+        );
+        '''
+    )
+
+    cursor.execute(
+        '''
         CREATE TABLE IF NOT EXISTS tag(
             tag_name TEXT NOT NULL UNIQUE, 
             username TEXT NOT NULL,
