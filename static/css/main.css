@@ -76,3 +76,8 @@ nav a:hover {
 pre code {
   color: green;
 }
+
+/* add some space around buttons */
+.button-spacing {
+  margin: 0.5em;
+}

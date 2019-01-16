@@ -98,3 +98,11 @@ def deleted_posts():
     deleted_posts = p.get_deleted_posts()
     print('deleted posts data ', deleted_posts)
     return render_template('deleted_posts.html', posts=deleted_posts)
+
+
+@post_blueprint.route('/posts/undelete/<int:post_id>', methods=['GET', 'POST'])
+def restore_post(post_id):
+    p = Post()
+    deleted_posts = p.get_deleted_posts()
+    print('deleted posts data ', deleted_posts)
+    return render_template('deleted_posts.html', posts=deleted_posts)

@@ -92,6 +92,16 @@ class Post(object):
         # data = self.db.get_rows('post')
         return data
 
+    def get_deleted_post(self, post_id):
+        data = self.db.get_query_as_list(
+            '''
+            SELECT * FROM deleted_post WHERE post_id = {}
+            '''.format(post_id)
+        )
+
+        # data = self.db.get_rows('post')
+        return data
+
     def purge_deleted_post(self):
         self.db.make_query(
             '''
@@ -184,21 +194,36 @@ class Post(object):
 
         return False
 
+    def restore_post(self, post_id):
+        # gets the post data
+        post = self.get_deleted_post(post_id)
+        # make a new Post object
+        if post:
+            post = post[0]
+            # New instance of Post using the data from the deleted_post
+            post_to_restore = Post(post)
+            # write the post to the post table
+            post_to_restore.create_post()
+            # remove the post from deleted post table
+            post_to_restore.remove_deleted_post(post_id)
+
+    def remove_deleted_post(self, post_id):
+        """
+        Remove a post from deleted_post table and check that it is gone.
+        """
+        self.db.make_query(
+            '''
+            DELETE FROM deleted_post WHERE post_id = "{}";
+            '''.format(post_id)
+        )
+
+        if self.get_deleted_post(post_id):
+            return False
+
+        return True
+
 
 if __name__ == "__main__":
-    # p = Post(title='test')
-    # p = Post(
-    #     title='hello world 2',
-    #     content='some rambling nonsense again probably'
-    # )
-
-    # p.create_post()
-
     p = Post()
-    print(p.get_post(3477343797))
 
-    test = p.get_and_set_post(3477343797)
-
-    print(p)
-
-    print(test)
+    p.restore_post(1165482816)

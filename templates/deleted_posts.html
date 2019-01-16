@@ -14,8 +14,7 @@
 
 <div class="row">
   <div class="col blog-card">
-    <!-- used to pass post_id to jQuery -->
-    <span id="postID" hidden>{{ post["post_id"] }}</span>
+
     <div class="row">
       <div class="col">
         <h2 class="title text-center">{{ post["title"] }}</h2>
@@ -33,7 +32,20 @@
           Posted @ {{ post["datetime_posted"][0:16] }}
         </h6>
       </div>
+
     </div>
+
+    <div class="row">
+
+    <div class="col text-right">
+        <a href="/posts/undelete/{{ post["post_id"] }}">
+            <button class="btn btn-warning btn-lg button-spacing">Restore post</button>
+        </a>
+    </div>
+    </div>
+
+
+
   </div>
 </div>
 
