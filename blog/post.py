@@ -82,6 +82,27 @@ class Post(object):
         # data = self.db.get_rows('post')
         return data
 
+    def get_deleted_posts(self):
+        data = self.db.get_query_as_list(
+            '''
+            SELECT * FROM deleted_post ORDER BY datetime_posted DESC
+            '''
+        )
+
+        # data = self.db.get_rows('post')
+        return data
+
+    def purge_deleted_post(self):
+        self.db.make_query(
+            '''
+            DELETE FROM deleted_post
+            ''''
+        )
+
+        if self.get_deleted_posts():
+            return False:
+        return True
+
     def get_post(self, post_id):
         # print('get_post, ', post_id)
         # this query is returning an empty list
