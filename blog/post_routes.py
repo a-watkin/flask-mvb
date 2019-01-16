@@ -90,3 +90,11 @@ def delete_post(post_id):
     p = Post()
     p.remove_post(post_id)
     return redirect(url_for('posts.get_posts'))
+
+
+@post_blueprint.route('/deleted', methods=['GET', 'POST'])
+def deleted_posts():
+    p = Post()
+    deleted_posts = p.get_deleted_posts()
+    print('deleted posts data ', deleted_posts)
+    return render_template('deleted_posts.html', posts=deleted_posts)

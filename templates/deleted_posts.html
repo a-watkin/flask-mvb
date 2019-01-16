@@ -1,0 +1,69 @@
+{% extends "base_template.html" %}
+
+<!-- start block content for this page -->
+{% block content %}
+
+<!-- check session -->
+{% if session %}
+
+<!-- check post -->
+{% if posts %}
+
+<!-- loop over data -->
+{% for post in posts %}
+
+<div class="row">
+  <div class="col blog-card">
+    <!-- used to pass post_id to jQuery -->
+    <span id="postID" hidden>{{ post["post_id"] }}</span>
+    <div class="row">
+      <div class="col">
+        <h2 class="title text-center">{{ post["title"] }}</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- injects markdown, can also inject HTML -->
+      <div class="col">{{ post["content"] | safe }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <h6 class="date-posted text-center">
+          Posted @ {{ post["datetime_posted"][0:16] }}
+        </h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- end for loop -->
+{% endfor %}
+
+<!-- no data -->
+{% else %}
+<div class="row">
+  <div class="col blog-card text-center">
+    <!-- no post data warning -->
+    <h1>No data</h1>
+  </div>
+</div>
+
+<!-- end check of data and or looping -->
+{% endif %}
+
+<!-- If no session display warning -->
+{% else %}
+
+<div class="row">
+  <div class="col blog-card text-center">
+    <!-- login warning -->
+    <h1>You are not logged in</h1>
+  </div>
+</div>
+
+<!-- end session check -->
+{% endif %}
+
+<!-- endblock -->
+{% endblock %}

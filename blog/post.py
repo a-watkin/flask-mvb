@@ -96,11 +96,11 @@ class Post(object):
         self.db.make_query(
             '''
             DELETE FROM deleted_post
-            ''''
+            '''
         )
 
         if self.get_deleted_posts():
-            return False:
+            return False
         return True
 
     def get_post(self, post_id):
