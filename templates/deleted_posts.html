@@ -63,6 +63,17 @@
 <!-- end for loop -->
 {% endfor %}
 
+
+<div class="row">
+    <div class="col text-center">
+        <a href="{{ url_for('posts.purge_deleted_posts') }}">
+            <button class="btn btn-danger btn-lg button-spacing">
+                PURGE ALL DELETED POSTS
+            </button>
+        </a>
+    </div>
+</div>
+
 <!-- no data -->
 {% else %}
 <div class="row">

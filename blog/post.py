@@ -102,7 +102,7 @@ class Post(object):
         # data = self.db.get_rows('post')
         return data
 
-    def purge_deleted_post(self):
+    def purge_deleted_posts(self):
         self.db.make_query(
             '''
             DELETE FROM deleted_post

@@ -4,6 +4,7 @@ from flask import Blueprint, jsonify, request, render_template, redirect, url_fo
 
 import mistune
 from .post import Post
+from .utils import login_required
 
 post_blueprint = Blueprint('posts', __name__)
 
@@ -29,6 +30,7 @@ def get_post(post_id):
 
 
 @post_blueprint.route('/new/', methods=['GET', 'POST'])
+@login_required
 def create_post():
     print('hello from create post ')
     if request.method == 'GET':
@@ -54,6 +56,7 @@ def create_post():
 
 
 @post_blueprint.route('/edit/<int:post_id>', methods=['GET', 'POST'])
+@login_required
 def edit_post(post_id):
     if request.method == 'GET':
         p = Post()
@@ -86,6 +89,7 @@ def edit_post(post_id):
 
 
 @post_blueprint.route('/delete/<int:post_id>', methods=['GET', 'POST'])
+@login_required
 def delete_post(post_id):
     p = Post()
     p.remove_post(post_id)
@@ -93,16 +97,25 @@ def delete_post(post_id):
 
 
 @post_blueprint.route('/deleted', methods=['GET', 'POST'])
+@login_required
 def deleted_posts():
     p = Post()
     deleted_posts = p.get_deleted_posts()
-    print('deleted posts data ', deleted_posts)
     return render_template('deleted_posts.html', posts=deleted_posts)
 
 
 @post_blueprint.route('/undelete/<int:post_id>', methods=['GET'])
+@login_required
 def restore_post(post_id):
     print('\n\nwhat is the request', request.method, '\n\n')
     p = Post()
     p.restore_post(post_id)
     return redirect(url_for('posts.deleted_posts'))
+
+
+@post_blueprint.route('/purge', methods=['GET'])
+@login_required
+def purge_deleted_posts():
+    p = Post()
+    p.purge_deleted_posts()
+    return redirect(url_for('posts.get_posts'))
