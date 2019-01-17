@@ -1,6 +1,6 @@
 {% extends "base_template.html" %} {% block content %}
 
-<!-- <h1>{{ post }}</h1> -->
+<!-- <h6>{{ post }}</h6> -->
 
 <div class="row">
   <div class="col blog-card">
@@ -15,11 +15,11 @@
     </div>
 
     <!-- check if post is public -->
-    {% if post["datetime_published"] %}
+    {% if post[0]["datetime_published"] %}
     <div class="row">
       <div class="col">
         <h6 class="text-success">
-          Published: {{ post["datetime_published"] }}
+          Published: {{ post[0]["datetime_published"][0:16] }}
         </h6>
       </div>
     </div>

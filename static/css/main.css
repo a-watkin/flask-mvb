@@ -1,9 +1,7 @@
 body {
   background: #292d2c;
-  color: white;
-
+  color: #7a7a7a;
   font-family: "Open Sans", sans-serif;
-  /* font-size: 150%; */
 }
 
 #text-input,
