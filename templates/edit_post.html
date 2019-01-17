@@ -1,10 +1,21 @@
 {% extends "base_template.html" %} {% block content %}
 
+{{ post }}
+
 <div class="row">
   <div class="col">
     <form method="post">
       <div class="row">
-        <div class="col">Publish? <input type="checkbox" name="publish" /></div>
+        <div class="col">
+          Publish?
+
+          <!-- set checkbox to checked -->
+          {% if post[0]['datetime_published'] %}
+          <input type="checkbox" name="publish" checked /> {% else %}
+          <input type="checkbox" name="publish" />
+          <!-- end if -->
+          {% endif %}
+        </div>
       </div>
 
       <input id="title-input" type="text" autocomplete="off" name="title"

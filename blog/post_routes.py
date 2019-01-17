@@ -73,11 +73,15 @@ def edit_post(post_id):
         title = request.form['title']
         content = request.form['content']
 
+        if 'publish' in request.form:
+            publish = datetime.datetime.now()
+            p.datetime_published = publish
+        else:
+            publish = None
+            p.datetime_published = publish
+
         p.title = title
         p.content = content
-
-        if 'publish' in request.form:
-            p.datetime_published = datetime.datetime.now()
 
         p.update_post(post_id)
 

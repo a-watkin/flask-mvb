@@ -14,15 +14,23 @@
       <div class="col">{{ post[0]["content"] | safe }}</div>
     </div>
 
+    <!-- check if post is public -->
+    {% if post["datetime_published"] %}
     <div class="row">
       <div class="col">
-        <h6 class="date-posted text-center">
-          <!-- slice of the datetime value -->
-          Posted @ {{ post[0]["datetime_posted"][0:16] }}
+        <h6 class="text-success">
+          Published: {{ post["datetime_published"] }}
         </h6>
       </div>
     </div>
+    <!-- show if post is private -->
+    {% else %}
+    <div class="row">
+      <div class="col"><h6 class="text-danger">This post is private</h6></div>
+    </div>
+    {% endif %}
 
+    <!-- check for session -->
     {% if session %}
     <div class="row">
       <div class="col text-right">
