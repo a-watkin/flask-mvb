@@ -24,6 +24,12 @@ app.config.update(
     SECRET_KEY=os.urandom(16)
 )
 
+
+@app.route('/', methods=['GET'])
+def test():
+    return 'getting here?'
+
+
 if __name__ == '__main__':
     export_settings = [
         "export FLASK_APP=app.py",
@@ -43,7 +49,7 @@ if __name__ == '__main__':
     if DEVELOPMENT:
         app.run(
             debug=True,
-            port=5050
+            port=5000
         )
     else:
         app.run(
