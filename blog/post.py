@@ -138,7 +138,7 @@ class Post(object):
         # VALUES (?, ?, ?, ?, ?, ?)
         #  (post_id, username, title, content, datetime_posted, datetime_published)
         query_string = '''
-            INSERT INTO post
+            INSERT INTO post (post_id, username, title, content, datetime_posted, datetime_published)
             VALUES (?, ?, ?, ?, ?, ?)
             '''
 
