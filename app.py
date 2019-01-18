@@ -2,7 +2,7 @@ import os
 import subprocess
 from flask import Flask
 
-DEVELOPMENT = False
+DEVELOPMENT = True
 
 from blog.post_routes import post_blueprint
 from blog.user_routes import user_blueprint
@@ -27,8 +27,8 @@ def test():
 if __name__ == '__main__':
     export_settings = [
         "export FLASK_APP=app.py",
-        # "export FLASK_ENV=development",
-        # "export FLASK_DEBUG=1"
+        "export FLASK_ENV=development",
+        "export FLASK_DEBUG=1"
     ]
 
     for command in export_settings:

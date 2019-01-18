@@ -132,7 +132,9 @@ class Post(object):
             return Post(data[0])
 
     def create_post(self):
-        # print(self.db, type(self.db))
+        print(self)
+        print()
+        print(self.db, type(self.db))
         # test says this is a tuple
         self.db.insert_data(
             table='post',
