@@ -63,14 +63,20 @@ class Post(object):
         pass
 
     def __str__(self):
-        return f'''
+        return '''
         A blog post: \n
-        post_id: {self.post_id}\n
-        title: {self.title}\n
-        content: {self.content}\n
-        datetime_posted: {self.datetime_posted}\n
-        datetime_published: {self.datetime_published}\n
-        '''
+        post_id: {}\n
+        title: {}\n
+        content: {}\n
+        datetime_posted: {}\n
+        datetime_published: {}\n
+        '''.foramt(
+            self.post_id,
+            self.title,
+            self.content,
+            self.datetime_posted,
+            self.datetime_published
+        )
 
     def get_posts(self):
         data = self.db.get_query_as_list(
