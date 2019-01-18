@@ -70,7 +70,7 @@ class Post(object):
         content: {}\n
         datetime_posted: {}\n
         datetime_published: {}\n
-        '''.foramt(
+        '''.format(
             self.post_id,
             self.title,
             self.content,
