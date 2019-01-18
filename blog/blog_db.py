@@ -59,11 +59,22 @@ class Database(object):
 
         data = [tuple(kwargs.values())]
 
+        print('data is ', data)
+
         placeholders = self.get_placeholders(len(kwargs))
+
+        print('placeholders ', placeholders)
 
         try:
             with sqlite3.connect(self.db_name) as connection:
                 c = connection.cursor()
+
+                print(
+                    'query is ',
+                    'INSERT INTO {} VALUES({})'.format(
+                    table_name, placeholders), data
+                )
+
                 c.executemany('INSERT INTO {} VALUES({})'.format(
                     table_name, placeholders), data)
         except Exception as e:
