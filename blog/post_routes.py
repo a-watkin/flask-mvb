@@ -15,8 +15,8 @@ try:
 except Exception as e:
     print('Some import error', print(sys.path))
     print('\n', os.getcwd(), '\n')
-    from post import Post
-    from utils import login_required
+    from blog.post import Post
+    from blog.utils import login_required
 
 post_blueprint = Blueprint('posts', __name__)
 
