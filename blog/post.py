@@ -259,6 +259,14 @@ class Post(object):
 
         return True
 
+    
+    def delete_all_posts(self):
+        self.db.make_query(
+            '''
+            DELETE FROM post
+            '''
+        )
+
 
 if __name__ == "__main__":
     p = Post()
