@@ -271,4 +271,6 @@ class Post(object):
 if __name__ == "__main__":
     p = Post()
 
-    p.restore_post(1165482816)
+    p.delete_all_posts()
+
+    # p.restore_post(1165482816)
