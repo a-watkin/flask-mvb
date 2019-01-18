@@ -3,8 +3,14 @@ import datetime
 from flask import Blueprint, jsonify, request, render_template, redirect, url_for
 
 import mistune
-from .post import Post
-from .utils import login_required
+
+try:
+    from .post import Post
+    from .utils import login_required
+except Exception as e:
+    print('Some import error')
+    from post import Post
+    from utils import login_required
 
 post_blueprint = Blueprint('posts', __name__)
 
