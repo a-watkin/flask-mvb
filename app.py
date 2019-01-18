@@ -1,7 +1,10 @@
+import os
 import subprocess
 from flask import Flask
 # this only sort of works
 # from flaskext.markdown import Markdown
+
+DEVELOPMENT = True
 
 from blog.post_routes import post_blueprint
 from blog.user_routes import user_blueprint
@@ -18,7 +21,7 @@ app.register_blueprint(user_blueprint, url_prefix="/user")
 
 app.config.update(
     TESTING=True,
-    SECRET_KEY='whyohwhy'
+    SECRET_KEY=os.urandom(16)
 )
 
 if __name__ == '__main__':
@@ -36,7 +39,10 @@ if __name__ == '__main__':
             shell=True
         )
 
-    app.run(
-        debug=True,
-        port=5050
-    )
+
+    if DEVELOPMENT:
+        app.run(
+            debug=True,
+            port=5050
+        )
+
