@@ -66,12 +66,14 @@ class Post(object):
         return '''
         A blog post: \n
         post_id: {}\n
+        username: {}\n
         title: {}\n
         content: {}\n
         datetime_posted: {}\n
         datetime_published: {}\n
         '''.format(
             self.post_id,
+            self.username,
             self.title,
             self.content,
             self.datetime_posted,
