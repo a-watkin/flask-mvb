@@ -81,6 +81,16 @@ class Database(object):
             print('insert_data problem ', e)
 
     def make_sanitized_query(self, query_string, data=None):
+        print('make_sanitized_query')
+
+        print(query_string)
+
+        print(data)
+
+
+        # print('make_sanitized_query query ', query_string, '\n',
+        # 'data ', data
+        # )
         with sqlite3.connect(os.path.join(self.db_name)) as connection:
             c = connection.cursor()
             return [x for x in c.execute(query_string, data)]

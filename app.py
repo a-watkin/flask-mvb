@@ -15,7 +15,9 @@ app.register_blueprint(user_blueprint, url_prefix="/user")
 
 app.config.update(
     TESTING=True,
-    SECRET_KEY=os.urandom(16)
+    SECRET_KEY='testing'
+    # SECRET_KEY=os.urandom(16)
+    
 )
 
 
