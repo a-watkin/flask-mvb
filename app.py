@@ -4,7 +4,7 @@ from flask import Flask
 # this only sort of works
 # from flaskext.markdown import Markdown
 
-DEVELOPMENT = True
+DEVELOPMENT = False
 
 from blog.post_routes import post_blueprint
 from blog.user_routes import user_blueprint
