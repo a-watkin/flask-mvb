@@ -121,10 +121,7 @@ class Post(object):
         return True
 
     def get_post(self, post_id):
-        # print('get_post, ', post_id)
-        # this query is returning an empty list
         data = self.db.get_row('post', 'post_id', post_id)
-        # print('get_post data, ', data)
         return data
 
     def get_and_set_post(self, post_id):
@@ -176,7 +173,7 @@ class Post(object):
 
     def save_deleted_post(self):
         query_string = '''
-            INSERT INTO post (post_id, username, title, content, datetime_posted, datetime_published)
+            INSERT INTO deleted_post (post_id, username, title, content, datetime_posted, datetime_published)
             VALUES (?, ?, ?, ?, ?, ?)
             '''
 
