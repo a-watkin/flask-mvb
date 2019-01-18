@@ -4,11 +4,17 @@ from flask import Blueprint, jsonify, request, render_template, redirect, url_fo
 
 import mistune
 
+import sys
+import os
+
+
+
 try:
     from .post import Post
     from .utils import login_required
 except Exception as e:
-    print('Some import error')
+    print('Some import error', print(sys.path))
+    print('\n', os.getcwd(), '\n')
     from post import Post
     from utils import login_required
 
