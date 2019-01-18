@@ -41,6 +41,10 @@ class Database(object):
             return False
 
     def insert_data(self, **kwargs):
+        """
+        This method does not work on the server.
+        """
+
 
         print('\nHello from insert_data, the **kwargs values are ', kwargs,
               'the db name is', self.db_name)

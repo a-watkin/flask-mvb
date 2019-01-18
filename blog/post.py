@@ -87,7 +87,6 @@ class Post(object):
             '''
         )
 
-        # data = self.db.get_rows('post')
         return data
 
     def get_deleted_posts(self):
@@ -134,9 +133,6 @@ class Post(object):
             return Post(data[0])
 
     def create_post(self):
-        # VALUES post_id = ?, username = ?, title = ?, content = ?, datetime_posted = ?, datetime_published = ?
-        # VALUES (?, ?, ?, ?, ?, ?)
-        #  (post_id, username, title, content, datetime_posted, datetime_published)
         query_string = '''
             INSERT INTO post (post_id, username, title, content, datetime_posted, datetime_published)
             VALUES (?, ?, ?, ?, ?, ?)
@@ -151,29 +147,7 @@ class Post(object):
             self.datetime_published,
         )
 
-
-
-        # print('sending data\n',
-        # query_string,
-        # data)
-
-
         self.db.make_sanitized_query(query_string, data)
-
-
-        # print(self)
-        # print()
-        # print(self.db, type(self.db))
-        # # test says this is a tuple
-        # self.db.insert_data(
-        #     table='post',
-        #     post_id=self.post_id,
-        #     username=self.username,
-        #     title=self.title,
-        #     content=self.content,
-        #     datetime_posted=self.datetime_posted,
-        #     datetime_published=self.datetime_published
-        # )
 
     def update_post(self, post_id):
         """
@@ -201,17 +175,21 @@ class Post(object):
             return False
 
     def save_deleted_post(self):
-        print(self)
+        query_string = '''
+            INSERT INTO post (post_id, username, title, content, datetime_posted, datetime_published)
+            VALUES (?, ?, ?, ?, ?, ?)
+            '''
 
-        self.db.insert_data(
-            table='deleted_post',
-            post_id=self.post_id,
-            username=self.username,
-            title=self.title,
-            content=self.content,
-            datetime_posted=self.datetime_posted,
-            datetime_published=self.datetime_published
+        data = (
+            self.post_id,
+            self.username,
+            self.title,
+            self.content,
+            self.datetime_posted,
+            self.datetime_published,
         )
+
+        self.db.make_sanitized_query(query_string, data)
 
     def remove_post(self, post_id):
         post_data = self.get_post(post_id)
@@ -261,6 +239,9 @@ class Post(object):
 
     
     def delete_all_posts(self):
+        """
+        Not implimented at the frontend.
+        """
         self.db.make_query(
             '''
             DELETE FROM post
@@ -271,6 +252,4 @@ class Post(object):
 if __name__ == "__main__":
     p = Post()
 
-    p.delete_all_posts()
-
-    # p.restore_post(1165482816)
+    print(p.get_deleted_posts())
