@@ -42,8 +42,8 @@ class Database(object):
 
     def insert_data(self, **kwargs):
 
-        # print('\nHello from insert_data, the **kwargs values are ', kwargs,
-        #       'the db name is', self.db_name)
+        print('\nHello from insert_data, the **kwargs values are ', kwargs,
+              'the db name is', self.db_name)
         """
         Expects any number of named arguments but must include a table name.
 
