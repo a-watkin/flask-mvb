@@ -45,4 +45,9 @@ if __name__ == '__main__':
             debug=True,
             port=5050
         )
+    else:
+        app.run(
+            debug=False,
+            host='0.0.0.0'
+        )
 
