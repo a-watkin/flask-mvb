@@ -18,6 +18,8 @@ class User(object):
         # init database
         self.db = Database()
 
+
+
     # check if username exists
     def check_for_username(self):
         """
@@ -61,13 +63,29 @@ class User(object):
         hashed_password = self.get_hashed_password(self.username)
         return PasswordUtil.check_hashed_password(self.password, hashed_password)
 
+    def insert_user(self):
+        """
+        Can only run once per user as is.
+        """
+        self.db.make_query(
+            '''
+            INSERT INTO user (username)
+            VALUES ("{}")
+            '''.format(self.username)
+        )
+
+        self.insert_hased_password(self.password)
+
 
 def main():
     u = User('a', 'a')
     # hased password has been inserted
-    print(u.get_hashed_password('a'))
+    # print(u.get_hashed_password('a'))
 
-    print(u.check_password())
+    # print(u.check_password())
+
+    u.insert_user()
+    # u.insert_hased_password(u.password)
 
 
 if __name__ == '__main__':

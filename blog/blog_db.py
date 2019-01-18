@@ -75,6 +75,7 @@ class Database(object):
             return [x for x in c.execute(query_string, data)]
 
     def make_query(self, query_string):
+        print(query_string)
         with sqlite3.connect(os.path.join(self.db_name)) as connection:
             c = connection.cursor()
             return [x for x in c.execute(query_string)]
