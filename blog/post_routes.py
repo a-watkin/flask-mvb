@@ -99,7 +99,7 @@ def edit_post(post_id):
 
         if p.get_post(p.post_id):
             # if you have a status code here it doesn't redirect
-            return redirect(url_for('posts.get_posts'))
+            return redirect(url_for('posts.edit_post', post_id=p.post_id))
         else:
             return 'Oh no something went wrong :(', 404
 
