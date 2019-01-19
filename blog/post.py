@@ -249,4 +249,4 @@ class Post(object):
 if __name__ == "__main__":
     p = Post()
 
-    print(p.get_deleted_posts())
+    print(p.get_post(6558864814))
