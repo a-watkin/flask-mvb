@@ -1,6 +1,6 @@
 import os
 import subprocess
-from flask import Flask
+from flask import Flask, render_template
 
 DEVELOPMENT = True
 
@@ -23,7 +23,7 @@ app.config.update(
 
 @app.route('/', methods=['GET'])
 def test():
-    return 'getting here?'
+    return render_template('home.html')
 
 
 if __name__ == '__main__':
@@ -42,20 +42,20 @@ if __name__ == '__main__':
         )
 
 
-    app.run(
-        debug=True,
-        host='0.0.0.0'
-    )
+    # app.run(
+    #     debug=True,
+    #     host='0.0.0.0'
+    # )
 
 
-    # if DEVELOPMENT:
-    #     app.run(
-    #         debug=True,
-    #         port=5000
-    #     )
-    # else:
-    #     app.run(
-    #         debug=False,
-    #         host='0.0.0.0'
-    #     )
+    if DEVELOPMENT:
+        app.run(
+            debug=True,
+            port=5050
+        )
+    else:
+        app.run(
+            debug=False,
+            host='0.0.0.0'
+        )
 

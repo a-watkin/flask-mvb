@@ -40,50 +40,6 @@ class Database(object):
             print('Database not found')
             return False
 
-    # def insert_data(self, **kwargs):
-    #     """
-    #     This method does not work on the server.
-    #     """
-
-
-    #     print('\nHello from insert_data, the **kwargs values are ', kwargs,
-    #           'the db name is', self.db_name)
-    #     """
-    #     Expects any number of named arguments but must include a table name.
-
-    #     db.insert_data(
-    #     table='tag',
-    #     tag_name=new_tag,
-    #     user_id='28035310@N00'
-    #     )
-    #     """
-
-    #     table_name = kwargs['table']
-    #     del kwargs['table']
-
-    #     data = [tuple(kwargs.values())]
-
-    #     print('data is ', data)
-
-    #     placeholders = self.get_placeholders(len(kwargs))
-
-    #     print('placeholders ', placeholders)
-
-    #     try:
-    #         with sqlite3.connect(self.db_name) as connection:
-    #             c = connection.cursor()
-
-    #             print(
-    #                 'query is ',
-    #                 'INSERT INTO {} VALUES({})'.format(
-    #                 table_name, placeholders), data
-    #             )
-
-    #             c.executemany('INSERT INTO {} VALUES({})'.format(
-    #                 table_name, placeholders), data)
-    #     except Exception as e:
-    #         print('insert_data problem ', e)
-
     def make_sanitized_query(self, query_string, data=None):
         print('make_sanitized_query')
 

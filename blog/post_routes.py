@@ -135,3 +135,11 @@ def purge_deleted_posts():
     p = Post()
     p.purge_deleted_posts()
     return redirect(url_for('posts.get_posts'))
+
+
+@post_blueprint.route('/delete/all', methods=['GET'])
+@login_required
+def delete_all_posts():
+    p = Post()
+    p.delete_all_posts()
+    return redirect(url_for('posts.get_posts'))
