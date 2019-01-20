@@ -8,7 +8,6 @@ import sys
 import os
 
 
-
 try:
     from .post import Post
     from .utils import login_required
@@ -21,14 +20,14 @@ except Exception as e:
 post_blueprint = Blueprint('posts', __name__)
 
 
-@post_blueprint.route('/', methods=['GET'])
+@post_blueprint.route('blog/', methods=['GET'])
 def get_posts():
     p = Post()
     posts = p.get_posts()
     markdown = mistune.Markdown()
     for post in posts:
         post['content'] = markdown(post['content'])
-    return render_template('posts.html', posts=posts), 200
+    return render_template('blog/posts.html', posts=posts), 200
 
 
 @post_blueprint.route('/<int:post_id>', methods=['GET'])
@@ -38,7 +37,7 @@ def get_post(post_id):
     if post:
         markdown = mistune.Markdown()
         post[0]['content'] = markdown(post[0]['content'])
-    return render_template('post.html', post=post), 200
+    return render_template('blog/post.html', post=post), 200
 
 
 @post_blueprint.route('/new/', methods=['GET', 'POST'])
@@ -46,7 +45,7 @@ def get_post(post_id):
 def create_post():
     print('hello from create post ')
     if request.method == 'GET':
-        return render_template('new_post.html'), 200
+        return render_template('blog/new_post.html'), 200
     if request.method == 'POST':
         # get the values
         title = request.form['title']
@@ -74,7 +73,7 @@ def edit_post(post_id):
         p = Post()
         post = p.get_post(post_id)
 
-        return render_template('edit_post.html', post=post), 200
+        return render_template('blog/edit_post.html', post=post), 200
 
     if request.method == 'POST':
         print('edit_post ', post_id)
@@ -117,7 +116,7 @@ def delete_post(post_id):
 def deleted_posts():
     p = Post()
     deleted_posts = p.get_deleted_posts()
-    return render_template('deleted_posts.html', posts=deleted_posts)
+    return render_template('blog/deleted_posts.html', posts=deleted_posts)
 
 
 @post_blueprint.route('/undelete/<int:post_id>', methods=['GET'])

@@ -1,15 +1,11 @@
 {% extends "base_template.html" %} {% block content %}
 
 <div class="row">
-
-    <div class="col">
-
-<a href="/posts">
-            <button>
-                Go to posts
-            </button>
-        </a>
-    </div>
+  <div class="col">
+    <a href="{{ url_for('posts.get_posts') }}">
+      <button class="btn btn-primary btn-lg button-spacing">Go to posts</button>
+    </a>
+  </div>
 </div>
 
 {% endblock %}
