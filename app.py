@@ -1,4 +1,4 @@
-from blog.user_routes import user_blueprint
+from user.user_routes import user_blueprint
 from blog.post_routes import post_blueprint
 import os
 import subprocess

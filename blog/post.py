@@ -6,19 +6,19 @@ try:
     """
     Running as flask app.
     """
-    from .blog_db import Database
-    from .utils import get_id
+    from common.utils import get_id
+    from common.db_interface import Database
 except Exception as e:
     """
     Running as module.
     """
-    print('\nRunning as a module, for testing\n')
-    # print(e)
-    # sys.path.append('/home/a/flask-blog-api/app')
-    # print('added to path ', sys.path)
-
-    from utils import get_id
-    from blog_db import Database
+    print('\npost running as a module, for testing\n')
+    print('post.py import problem ', e)
+    # adding the root directory of the projects
+    sys.path.append('/home/a/projects/flask-mvb')
+    print('added to path ', sys.path)
+    from common.utils import get_id
+    from common.db_interface import Database
 
 
 class Post(object):
@@ -234,7 +234,6 @@ class Post(object):
 
         return True
 
-    
     def delete_all_posts(self):
         """
         Not implimented at the frontend.

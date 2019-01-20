@@ -1,1 +1,1 @@
-print('why oh why')
+print('blog package called')

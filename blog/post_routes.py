@@ -1,21 +1,20 @@
+import os
+import sys
 import datetime
 
 from flask import Blueprint, jsonify, request, render_template, redirect, url_for
-
+# for markdown
 import mistune
-
-import sys
-import os
 
 
 try:
-    from .post import Post
-    from .utils import login_required
+    from .blog.post import Post
+    from .common.utils import login_required
 except Exception as e:
-    print('Some import error', print(sys.path))
+    print('post routes import error', print(sys.path))
     print('\n', os.getcwd(), '\n')
     from blog.post import Post
-    from blog.utils import login_required
+    from common.utils import login_required
 
 post_blueprint = Blueprint('posts', __name__)
 

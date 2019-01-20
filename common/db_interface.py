@@ -6,27 +6,9 @@ class Database(object):
     def __init__(self):
         self.db_name = 'minimal_viable_blog.db'
 
-        # having some issue with importing so, specifying the path to the db
-        # self.db_name = os.path.join(os.getcwd(), 'without_sql_alchemy.db')
-
     @classmethod
     def get_placeholders(cls, num):
         return ','.join(['?' for x in list(range(num))])
-
-    # PROBABLY JUST NIX THIS
-    # def make_db(self):
-    #     try:
-    #         from .db_schema import create_database
-    #     except Exception as e:
-    #         from db_schema import create_database
-        
-    #     # db_schema.create_database(name)
-    #     create_database(self.db_name)
-    #     if os.path.isfile(self.db_name):
-    #         return True
-    #     else:
-    #         print('Database not created.')
-    #         return False
 
     def delete_database(self):
         if self.db_name in os.listdir():
@@ -42,15 +24,9 @@ class Database(object):
 
     def make_sanitized_query(self, query_string, data=None):
         print('make_sanitized_query')
-
         print(query_string)
-
         print(data)
 
-
-        # print('make_sanitized_query query ', query_string, '\n',
-        # 'data ', data
-        # )
         with sqlite3.connect(os.path.join(self.db_name)) as connection:
             c = connection.cursor()
             return [x for x in c.execute(query_string, data)]
@@ -104,4 +80,3 @@ class Database(object):
 
 if __name__ == "__main__":
     db = Database()
-

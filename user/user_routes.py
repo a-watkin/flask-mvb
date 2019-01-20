@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request, render_template, redirect, url_for, flash, session
 
 
-from .utils import login_required
+from common.utils import login_required
 from .user import User
 
 user_blueprint = Blueprint('user', __name__)
@@ -26,7 +26,7 @@ def login():
         else:
             status_code = 401
             flash('Wrong username and/or password', error)
-    return render_template('login.html')
+    return render_template('user/login.html')
 
 
 @user_blueprint.route('/logout')
@@ -66,4 +66,4 @@ def account():
             user.insert_hased_password(new_password)
             flash('Password changed.')
 
-    return render_template('account.html'), 200
+    return render_template('user/account.html'), 200

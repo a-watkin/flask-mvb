@@ -5,9 +5,9 @@ try:
 
     from .password_util import PasswordUtil
 except Exception as e:
-    from blog_db import Database
+    from common.db_interface import Database
 
-    from password_util import PasswordUtil
+    from common.password_util import PasswordUtil
 
 
 class User(object):
@@ -18,9 +18,8 @@ class User(object):
         # init database
         self.db = Database()
 
-
-
     # check if username exists
+
     def check_for_username(self):
         """
         Checks if the username is in the database.
