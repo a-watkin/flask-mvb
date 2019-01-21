@@ -20,6 +20,7 @@ except Exception as e:
     print('added to path ', sys.path)
     from common.utils import get_id
     from common.db_interface import Database
+    from tag.tag import Tag
 
 
 class Post(object):

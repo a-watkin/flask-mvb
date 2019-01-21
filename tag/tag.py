@@ -196,39 +196,6 @@ class Tag(object):
 
         return tag_data
 
-    def get_photos_by_tag(self, tag_name):
-        """
-        Get all the photos that are associated with a particular tag.
-
-        I will need to handle spaces.
-        """
-        # q_data = None
-
-        query_string = '''
-            select photo_id, photo_title, views, tag_name, large_square from photo
-            join photo_tag using(photo_id)
-            join images using(photo_id)
-            where tag_name = "{}"
-            order by views desc
-        '''.format(tag_name)
-
-        tag_data = self.db.get_query_as_list(query_string)
-
-        # print(tag_data)
-
-        rtn_dict = {
-            'tag_info': {'number_of_photos': self.get_photo_count_by_tag(tag_name)}
-        }
-
-        count = 0
-        for t in tag_data:
-            rtn_dict[count] = t
-            rtn_dict[count]['human_readable_tag'] = name_util.make_decoded(
-                rtn_dict[count]['tag_name'])
-            count += 1
-
-        return rtn_dict
-
     def get_tag(self, tag_name):
         """
         Changed to return human_readable_tag
@@ -593,8 +560,47 @@ class Tag(object):
 
         return rtn_dict
 
+    def get_entity_by_tag(self, entity, tag_name):
+        """
+        Get all the photos that are associated with a particular tag.
+
+        I will need to handle spaces.
+        """
+        # q_data = None
+
+        if entity == 'photo':
+            query_string = '''
+                select photo_id, photo_title, views, tag_name, large_square from photo
+                join photo_tag using(photo_id)
+                join images using(photo_id)
+                where tag_name = "{}"
+                order by views desc
+            '''.format(tag_name)
+
+        if entity == 'post':
+            query_string = '''
+                SELECT post_id, title, content, datetime_posted, datetime_published FROM post
+                JOIN post_tag USING(post_id)
+                WHERE tag_name = "{}"
+                ORDER BY datetime_posted DESC
+            '''.format(tag_name)
+
+        tag_data = self.db.get_query_as_list(query_string)
+
+        rtn_dict = {
+            tag_name: tag_data
+        }
+
+        for data in tag_data:
+
+            data['tags'] = self.get_entity_tags(entity, data['post_id'])
+
+        return [rtn_dict]
+
 
 if __name__ == "__main__":
     t = Tag()
     # print(t.get_count_by_tag('post_id', 'post', 'post_tag', 'test'))
-    print(t.get_entity_tags('post', 1431516958))
+    # print(t.get_entity_tags('post', 1431516958))
+
+    print(t.get_entity_by_tag('post', 'test'))
