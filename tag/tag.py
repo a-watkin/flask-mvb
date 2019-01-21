@@ -593,7 +593,8 @@ class Tag(object):
 
         for data in tag_data:
 
-            data['tags'] = self.get_entity_tags(entity, data['post_id'])
+            data['tags'] = self.get_entity_tags(
+                entity, data['{}_id'.format(entity)])
 
         return [rtn_dict]
 

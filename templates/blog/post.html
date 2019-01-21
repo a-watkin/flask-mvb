@@ -23,8 +23,8 @@
     </div>
 
     <!-- check for tags -->
-    {% if post[0]['tags'] %}
     <div class="row">
+      {% if post[0]['tags'] %}
       <div class="col">
         <!-- iterate over tags -->
         {% for tag in post[0]['tags'] %}
@@ -36,9 +36,16 @@
         <!-- end for loop -->
         {% endfor %}
       </div>
+      <!-- end if -->
+      {% endif %}
+      <!-- add tag -->
+      {% if session %}
+
+      <div class="col text-right">
+        <button class="btn btn-warning">Add tag</button>
+      </div>
+      {% endif %}
     </div>
-    <!-- end if -->
-    {% endif %}
 
     <!-- check for session -->
     {% if session %}
