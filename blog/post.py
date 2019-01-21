@@ -8,6 +8,7 @@ try:
     """
     from common.utils import get_id
     from common.db_interface import Database
+    from tag.tag import Tag
 except Exception as e:
     """
     Running as module.
@@ -122,6 +123,15 @@ class Post(object):
 
     def get_post(self, post_id):
         data = self.db.get_row('post', 'post_id', post_id)
+
+        if data:
+            # get tags
+            t = Tag()
+            tag_data = t.get_entity_tags('post', data[0]['post_id'])
+
+            if tag_data:
+                data[0]['tags'] = tag_data
+
         return data
 
     def get_and_set_post(self, post_id):

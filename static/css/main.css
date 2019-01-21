@@ -71,3 +71,13 @@ pre code {
 .button-spacing {
   margin: 0.7em;
 }
+
+.tag-spacing {
+  margin-bottom: 0.7em;
+  margin-right: 0.2em;
+}
+
+.post-edit-info {
+  /* margin-top: 0.5em; */
+  margin-bottom: 0.5em;
+}

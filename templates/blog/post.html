@@ -22,26 +22,44 @@
       </div>
     </div>
 
+    <!-- check for tags -->
+    {% if post[0]['tags'] %}
+    <div class="row">
+      <div class="col">
+        <!-- iterate over tags -->
+        {% for tag in post[0]['tags'] %}
+        <a href="">
+          <button type="button" class="btn btn-outline-success tag-spacing">
+            {{ tag["human_readable_tag"] }}
+          </button>
+        </a>
+        <!-- end for loop -->
+        {% endfor %}
+      </div>
+    </div>
+    <!-- end if -->
+    {% endif %}
+
     <!-- check for session -->
     {% if session %}
 
-    <!-- check if post is public -->
-    {% if post[0]["datetime_published"] %}
-    <div class="row">
+    <div class="row text-left post-edit-info">
+      <!-- check if post is public -->
+      {% if post[0]["datetime_published"] %}
+
       <div class="col">
         <h6 class="text-success">
           Published: {{ post[0]["datetime_published"][0:16] }}
         </h6>
       </div>
-    </div>
-    <!-- show if post is private -->
-    {% else %}
-    <div class="row">
-      <div class="col"><h6 class="text-danger">This post is private</h6></div>
-    </div>
-    {% endif %}
 
-    <div class="row">
+      <!-- show if post is private -->
+      {% else %}
+      <div class="row">
+        <div class="col"><h6 class="text-danger">This post is private</h6></div>
+      </div>
+      {% endif %}
+
       <div class="col text-right">
         <a
           class="edit-link"

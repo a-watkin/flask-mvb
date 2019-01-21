@@ -69,6 +69,7 @@ class Database(object):
         return [dict(ix) for ix in q_data]
 
     def get_query_as_list(self, query_string):
+        print('get_query_as_list called', query_string)
         q_data = None
         with sqlite3.connect(self.db_name) as connection:
             c = connection.cursor()
