@@ -3,11 +3,8 @@
 <!-- {{ post }} -->
 
 <div class="row">
-  <div class="col text-center">
-    <h1 class="title">Edit post</h1>
-  </div>
+  <div class="col text-center"><h1 class="title">Edit post</h1></div>
 </div>
-
 
 <div class="row">
   <div class="col">
@@ -25,11 +22,29 @@
         </div>
       </div>
 
-      <input id="title-input" type="text" autocomplete="off" name="title"
-      class="form-control text-center" value="{{
-        post[0]['title']
-    }}"
-      aria-label="Post title" aria-describedby="basic-addon2" required />
+      <input
+        id="title-input"
+        type="text"
+        autocomplete="off"
+        name="title"
+        class="form-control text-center"
+        value="{{ post[0]['title'] }}"
+        aria-label="Post title"
+        aria-describedby="basic-addon2"
+        required
+      />
+
+      <!-- tags -->
+      <input
+        id="title-input"
+        type="text"
+        autocomplete="off"
+        name="tags"
+        class="form-control text-center"
+        placeholder="Enter tags here..."
+        aria-label="Tags"
+        aria-describedby="basic-addon2"
+      />
 
       <textarea
         id="content-input"
@@ -59,6 +74,6 @@
   </div>
 </div>
 
-<hr>
+<hr />
 
 {% endblock %}
