@@ -9,12 +9,14 @@ import mistune
 
 try:
     from .blog.post import Post
+    from .tag.tag import Tag
     from .common.utils import login_required
 except Exception as e:
     print('post routes import error', print(sys.path))
     print('\n', os.getcwd(), '\n')
     from blog.post import Post
     from common.utils import login_required
+    from tag.tag import Tag
 
 post_blueprint = Blueprint('posts', __name__)
 
@@ -63,6 +65,9 @@ def create_post():
             p.datetime_published = publish
 
         p.create_post()
+
+        t = Tag()
+        t.add_tags_to_post(tags_data, p.post_id)
 
         if p.get_post(p.post_id):
             # if you have a status code here it doesn't redirect

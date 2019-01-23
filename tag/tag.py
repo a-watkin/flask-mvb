@@ -359,48 +359,61 @@ class Tag(object):
 
         return [rtn_dict]
 
-    def add_tag(self, tags):
-        current_tags = self.get_all_tags()
+    def add_tags_to_post(self, post_id, tags):
+        self.add_tags(tags)
+        if isinstance(tags, list):
+            for tag in tags:
+                self.add_to_post_tag(post_id, tags)
+        else:
+            self.add_to_post_tag(post_id, tags)
+
+    def add_tags(self, tags):
+        current_tags = self.get_all_tag_names()
 
         print('current_tags \n',
               current_tags)
 
         if isinstance(tags, list):
+            print('multiple tags, ', tags)
             for tag in tags:
                 if tag not in current_tags:
-                    self.db.make_query(
-                        '''
-                    insert into tag (tag_name, username, posts)
-                    values ("{}", "{}", {})
-                    '''.format(
-                            tag,
-                            'a',
-                            1
-                        )
-                    )
+                    print('inserting tag ', tag)
+                    self.insert_tag(tag)
 
-        elif tag not in current_tags:
-            self.db.make_query(
-                '''
-                    insert into tag (tag_name, username, posts)
-                    values ("{}", "{}", {})
-                    '''.format(
-                    tag,
-                    'a',
-                    1
-                )
+        # here the tags variable holds a single string
+        elif tags not in current_tags:
+            print('here?')
+            self.insert_tag(tags)
+
+    def insert_tag(self, tag, username=None, posts=None):
+        self.db.make_query(
+            '''
+        insert into tag (tag_name, username, posts)
+        values ("{}", "{}", {})
+        '''.format(
+                tag,
+                'a',
+                1
             )
+        )
 
-        pass
+    def add_to_post_tag(self, post_id, tag_name):
+        print('add_to_post_tag', post_id, tag_name)
+        # query_string = '''
+        #     INSERT INTO post_tag (post_id, tag_name)
+        #     VALUES (?, ?)
+        #     '''
+
+        # data = (
+        #     post_id,
+        #     tag_name
+        # )
+
+        # if self.db.make_sanitized_query(query_string, data):
+        #     return True
+        # return False
 
 
 if __name__ == "__main__":
     t = Tag()
-    # print(t.get_count_by_tag('post_id', 'post', 'post_tag', 'test'))
-    # print(t.get_entity_tags('post', 1431516958))
-
-    # print(t.get_entity_by_tag('post', 'test'))
-
-    # t.add_tag(['test'])
-
-    print(t.get_all_tag_names())
+    t.add_tags_to_post(2311729335, ['apples', 'oranges'])
