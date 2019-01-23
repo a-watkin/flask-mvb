@@ -430,6 +430,18 @@ class Tag(object):
 
     # def data_for_edit_tag(self):
 
+    def get_all_tags(self):
+        tag_data = self.db.get_query_as_list(
+            '''
+            SELECT tag_name FROM tag ORDER BY tag_name DESC
+            '''
+        )
+
+        for tag in tag_data:
+            tag['human_readable_tag'] = self.decode_tag(tag['tag_name'])
+
+        return tag_data
+
 
 if __name__ == "__main__":
     t = Tag()
@@ -446,4 +458,6 @@ if __name__ == "__main__":
 
     # t.add_tags_to_post(2754678461, 'test')
 
-    print(t.get_entity_by_tag('post', 'tag'))
+    # print(t.get_entity_by_tag('post', 'tag'))
+
+    print(t.get_all_tags())

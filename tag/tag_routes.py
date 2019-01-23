@@ -21,6 +21,16 @@ except Exception as e:
 tag_blueprint = Blueprint('tag', __name__)
 
 
+@tag_blueprint.route('/', methods=['GET'])
+def get_all_tags():
+    t = Tag()
+    tags = t.get_all_tags()
+
+    print(tags)
+
+    return render_template('tag/tags.html', tags=tags), 200
+
+
 @tag_blueprint.route('/<string:tag_name>', methods=['GET'])
 def get_posts_by_tag(tag_name):
     t = Tag()
