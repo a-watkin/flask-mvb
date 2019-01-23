@@ -81,6 +81,22 @@ class Tag(object):
 
         return tags
 
+    def entity_tag_list(self, post_id):
+        tag_data = self.db.get_query_as_list(
+            '''
+            SELECT tag_name FROM post_tag 
+            WHERE post_id = {}
+            ORDER BY tag_name
+            '''.format(post_id)
+        )
+
+        tags = []
+
+        for tag in tag_data:
+            tags.append(list(tag.values())[0])
+
+        return tags
+
     def get_entity_tags(self, entity_name, entity_id):
 
         if entity_name == 'post':
@@ -359,11 +375,25 @@ class Tag(object):
 
         return [rtn_dict]
 
+    def remove_post_tags(self, post_id):
+        self.db.make_query(
+            '''
+            DELETE FROM post_tag WHERE post_id = {}
+            '''.format(post_id)
+        )
+
     def add_tags_to_post(self, post_id, tags):
         current_tags = self.get_all_tag_names()
+        # list of tags already assocaited with a post
+        post_tags = self.entity_tag_list(post_id)
 
-        # If the tag is not in the tag table
+        # delete all current tags belonging to the post
+        if len(post_tags) > 0:
+            self.remove_post_tags(post_id)
+
+            # If the tag is not in the tag table
         for tag in tags:
+            tag = tag.strip()
             if tag not in current_tags:
                 print('inserting tag ', tag)
                 self.insert_tag(tag)
@@ -409,7 +439,13 @@ class Tag(object):
 if __name__ == "__main__":
     t = Tag()
 
-    print(t.get_all_tag_names())
+    # print(t.get_all_tag_names())
+
+    # print(t.get_entity_tags('post', 2789896248))
+
+    # print(t.entity_tag_list(2789896248))
+
+    t.remove_post_tags(2789896248)
 
     # t.add_tags_to_post(1431516958, ['apples', 'oranges'])
 

@@ -133,7 +133,7 @@ class Post(object):
             if tag_data:
                 data[0]['tags'] = tag_data
 
-                h_tag_list = t.get_all_tag_names()
+                h_tag_list = t.entity_tag_list(post_id)
                 data[0]['human_readable_tags'] = h_tag_list
 
         return data

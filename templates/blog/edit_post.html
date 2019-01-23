@@ -1,6 +1,6 @@
 {% extends "base_template.html" %} {% block content %}
 
-{{ post }}
+<!-- {{ post }} -->
 
 <div class="row">
   <div class="col text-center"><h1 class="title">Edit post</h1></div>
@@ -38,6 +38,7 @@
       <input id="title-input" type="text" autocomplete="off" name="tags"
       class="form-control text-center" {% if post[0]['tags'] %} {% for tag in
       post[0]["human_readable_tags"] %} value="{{ post[0]["human_readable_tags"]|join(", ")
+
 
       }}" {% endfor %} {% else %} placeholder="Enter tags here..." {% endif %}
       aria-label="Tags" aria-describedby="basic-addon2" />

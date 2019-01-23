@@ -27,9 +27,12 @@ class Database(object):
         # print(query_string)
         # print(data)
 
-        with sqlite3.connect(os.path.join(self.db_name)) as connection:
-            c = connection.cursor()
-            return [x for x in c.execute(query_string, data)]
+        try:
+            with sqlite3.connect(os.path.join(self.db_name)) as connection:
+                c = connection.cursor()
+                return [x for x in c.execute(query_string, data)]
+        except Exception as e:
+            print('make_sanitized_query ', e)
 
     def make_query(self, query_string):
         print(query_string)
