@@ -89,6 +89,29 @@ class Post(object):
             '''
         )
 
+        for post in data:
+            t = Tag()
+            tag_data = t.get_entity_tags('post', post['post_id'])
+
+            if tag_data:
+                post['tags'] = tag_data
+
+                h_tag_list = t.entity_tag_list(post['post_id'])
+                post['human_readable_tags'] = h_tag_list
+
+            # print(post)
+
+        # if data:
+        #     # get tags
+        #     t = Tag()
+        #     tag_data = t.get_entity_tags('post', data[0]['post_id'])
+
+        #     if tag_data:
+        #         data[0]['tags'] = tag_data
+
+        #         h_tag_list = t.entity_tag_list(post_id)
+        #         data[0]['human_readable_tags'] = h_tag_list
+
         return data
 
     def get_deleted_posts(self):
@@ -262,4 +285,5 @@ class Post(object):
 if __name__ == "__main__":
     p = Post()
 
-    print(p.get_post(6558864814))
+    print(p.get_posts())
+    # print(p.get_post(6558864814))
