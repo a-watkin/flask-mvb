@@ -28,7 +28,7 @@
       <div class="col">
         <!-- iterate over tags -->
         {% for tag in post[0]['tags'] %}
-        <a href="">
+        <a href="{{ url_for('tag.get_posts_by_tag', tag_name=tag["tag_name"]) }}">
           <button type="button" class="btn btn-outline-success tag-spacing">
             {{ tag["human_readable_tag"] }}
           </button>

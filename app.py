@@ -1,5 +1,6 @@
 from user.user_routes import user_blueprint
 from blog.post_routes import post_blueprint
+from tag.tag_routes import tag_blueprint
 import os
 import subprocess
 from flask import Flask, render_template
@@ -13,6 +14,7 @@ app.register_blueprint(post_blueprint,
                        url_prefix="/posts")
 
 app.register_blueprint(user_blueprint, url_prefix="/user")
+app.register_blueprint(tag_blueprint, url_prefix="/tag")
 
 
 app.config.update(

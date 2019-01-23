@@ -364,16 +364,11 @@ class Tag(object):
 
         tag_data = self.db.get_query_as_list(query_string)
 
-        rtn_dict = {
-            tag_name: tag_data
-        }
-
         for data in tag_data:
-
             data['tags'] = self.get_entity_tags(
                 entity, data['{}_id'.format(entity)])
 
-        return [rtn_dict]
+        return tag_data
 
     def remove_post_tags(self, post_id):
         self.db.make_query(
@@ -445,8 +440,10 @@ if __name__ == "__main__":
 
     # print(t.entity_tag_list(2789896248))
 
-    t.remove_post_tags(2789896248)
+    # t.remove_post_tags(2789896248)
 
     # t.add_tags_to_post(1431516958, ['apples', 'oranges'])
 
     # t.add_tags_to_post(2754678461, 'test')
+
+    print(t.get_entity_by_tag('post', 'tag'))
