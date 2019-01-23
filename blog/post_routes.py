@@ -49,8 +49,14 @@ def create_post():
         # get the values
         title = request.form['title']
         content = request.form['content']
+        tags = request.form['tags']
 
+        print('\n', tags, type(tags))
+        tags_data = tags.split(',')
+        # tag1, tag2, tag three
         p = Post(title=title, content=content)
+
+        print('post_id', p.post_id)
 
         if 'publish' in request.form:
             publish = datetime.datetime.now()

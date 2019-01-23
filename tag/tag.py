@@ -49,86 +49,6 @@ class Tag(object):
 
         return photo_count
 
-    def get_photo_count_by_tag(self, tag_name):
-        query_string = '''
-            select count(photo_id) from photo
-            join photo_tag using(photo_id)
-            where tag_name = "{}"
-        '''.format(tag_name)
-
-        photo_count = self.db.get_query_as_list(query_string)
-
-        if len(photo_count) > 0:
-            return photo_count[0]['count(photo_id)']
-
-    def update_photo_count(self, tag_name):
-        """
-        Updates the photo count for the given tag.
-        """
-        count = self.get_photo_count_by_tag(tag_name)
-
-        self.db.make_query(
-            '''
-            update tag
-            set photos = {}
-            where tag_name = "{}"
-            '''.format(count, tag_name)
-        )
-
-    def check_all_tag_photo_counts(self):
-        """
-        Gets a count of all the photos associated with a tag.
-        Checks that the photos column in tag is up to date.
-        """
-        data = self.db.get_query_as_list(
-            '''
-            select * from tag
-            '''
-        )
-
-        for tag in data:
-            print()
-            print(tag)
-            # query for the number of photos using the tag
-            # compare it to the number in the photos column
-            # update if necessary
-            query_count = self.db.get_query_as_list(
-                '''
-                select count(tag_name)
-                from photo_tag
-                where tag_name = "{}"
-                '''.format(tag['tag_name'])
-            )
-
-            if query_count[0]['count(tag_name)'] == tag['photos']:
-                print('OK', 'actual photos number with tag',
-                      query_count[0]['count(tag_name)'], 'in photos column', tag['photos'])
-            else:
-                print('MISSMATCH IN PHOTOS AND PHOTOS WITH TAG\n', 'actual photos number with tag',
-                      query_count[0]['count(tag_name)'], 'in photos column', tag['photos'])
-
-                tag_name = tag['tag_name']
-                count = query_count[0]['count(tag_name)']
-                break
-
-        print('\nDONE NO PROBLEMS!')
-
-    def remove_zero_photo_tags(self):
-        self.check_all_tag_photo_counts()
-
-        zero_photos = self.db.make_query(
-            '''
-            delete from tag where photos = 0
-            '''
-        )
-
-    def get_zero_photo_tag_count(self):
-        return self.db.make_query(
-            '''
-            select count(photos) from tag where photos = 0
-            '''
-        )[0][0]
-
     def check_forbidden(self, tag_name):
         print('hello from check_forbidden')
         print(tag_name)
@@ -144,27 +64,22 @@ class Tag(object):
     def decode_tag(self, tag_name):
         return urllib.parse.unquote(tag_name)
 
-    def get_all_tags(self):
-        # as a list of dict values
+    def get_all_tag_names(self):
+        """
+        Get all tag names as a list.
+        """
         tag_data = self.db.get_query_as_list(
-            "SELECT tag_name, photos FROM tag order by tag_name"
+            '''
+            SELECT tag_name FROM tag ORDER BY tag_name
+            '''
         )
 
-        rtn_dict = {
+        tags = []
 
-        }
-
-        count = 0
         for tag in tag_data:
-            rtn_dict[count] = tag
-            tag_name = tag['tag_name']
-            # adding the number of photos with the tag
-            rtn_dict[count]['photos'] = tag['photos']
-            rtn_dict[count]['human_readable_tag'] = self.decode_tag(
-                tag['tag_name'])
-            count += 1
+            tags.append(list(tag.values())[0])
 
-        return rtn_dict
+        return tags
 
     def get_entity_tags(self, entity_name, entity_id):
 
@@ -219,7 +134,7 @@ class Tag(object):
 
             return rtn_dict
 
-    def check_photo_tag(self, tag_name):
+    def check_tag(self, tag_name):
         """
         Check that a tag has been added.
         """
@@ -261,39 +176,6 @@ class Tag(object):
             return True
         else:
             return False
-
-    def clean_tags(self):
-        forbidden = ['.', ';', '%']
-        # as a list of dict values
-        tag_data = self.db.get_query_as_list("SELECT * FROM tag")
-        for tag in tag_data:
-            print(tag['tag_name'], tag['tag_name'] in forbidden)
-            if tag['tag_name'] in forbidden:
-                print('please just ket me die already, ', tag['tag_name'])
-                self.remove_tag_name(tag['tag_name'])
-
-        tag_data = self.db.get_query_as_list("SELECT * FROM photo_tag")
-        for tag in tag_data:
-            print(tag['tag_name'], tag['tag_name'] in forbidden)
-            if tag['tag_name'] in forbidden:
-                print('please just ket me die already, ', tag['tag_name'])
-                self.remove_tag_name(tag['tag_name'])
-
-    def remove_tags_from_photo(self, photo_id, tag_list):
-        for tag in tag_list:
-            print(tag)
-
-            # if the tag isn't present it will just fail silently
-            resp = self.db.make_query(
-                '''
-                delete from photo_tag
-                where photo_id = {}
-                and tag_name = "{}"
-                '''.format(photo_id, tag)
-            )
-            print(resp)
-
-            self.update_photo_count(tag)
 
     def replace_tags(self, photo_id, tag_list):
         """
@@ -439,127 +321,6 @@ class Tag(object):
         else:
             return False
 
-    def count_photos_by_tag_name(self, tag_name):
-        """
-
-        """
-        print('count_photos_by_tag_name, passed ', tag_name)
-
-        count = self.db.make_query(
-            '''
-            select count(tag_name)
-            from photo_tag
-            where tag_name = "{}"
-            '''.format(tag_name)
-        )
-
-        if len(count) > 0:
-            return count[0][0]
-        else:
-            return 0
-
-    def get_tag_photos_in_range(self, tag_name, limit=20, offset=0):
-        print('hello from get_tag_photos_in_range passed the tag ', tag_name)
-
-        # I think flask is passing decoded values in.
-        tag_name = name_util.make_encoded(tag_name)
-
-        # get number of photos in database total
-        num_photos = self.count_photos_by_tag_name(tag_name)
-
-        print(num_photos)
-
-        if offset > num_photos:
-            offset = num_photos - (num_photos % 20)
-
-        page = offset // limit
-
-        pages = num_photos // limit
-
-        # otherwise it starts at 0 and I want it to start at 1
-        if num_photos == 20:
-            page = 1
-            pages = 1
-
-        elif num_photos > 20 and num_photos % 20 == 0:
-            page += 1
-
-        else:
-            page += 1
-            pages += 1
-
-        # guards against page being grater than pages
-        if page > pages:
-            print('STAHP!', offset, num_photos)
-            # prevents an empty set being returned
-            offset = offset - 20
-            page = pages
-
-        q_data = None
-        with sqlite3.connect(self.db.db_name) as connection:
-            c = connection.cursor()
-
-            c.row_factory = sqlite3.Row
-
-            query_string = (
-                '''
-                select photo_id, photo_title, views, tag_name, large_square from photo
-                join photo_tag using(photo_id)
-                join images using(photo_id)
-                where tag_name = "{}"
-                order by views
-                desc limit {} offset {}
-                '''
-            ).format(tag_name, limit, offset)
-
-            q_data = c.execute(query_string)
-
-        rtn_dict = {
-            'limit': limit,
-            'offset': offset,
-            'photos': []
-        }
-
-        """
-        I think it may actually be better to layout what fields you want here.
-
-        And maybe include all sizes.
-        """
-
-        data = [dict(ix) for ix in q_data]
-
-        # Do I really need to decode the title?
-        for photo in data:
-            if photo['photo_title'] is not None:
-                photo['photo_title'] = name_util.make_decoded(
-                    photo['photo_title'])
-
-        a_dict = {}
-        count = 0
-        for d in data:
-            a_dict[count] = d
-            count += 1
-
-        rtn_dict = {'photos': a_dict}
-
-        print('\n why?')
-        # not making it this far
-        print('should be passing tag_name the value of ',
-              tag_name, name_util.make_decoded(tag_name))
-
-        rtn_dict['limit'] = limit
-        rtn_dict['offset'] = offset
-        rtn_dict['tag_name'] = tag_name
-        rtn_dict['human_readable_name'] = name_util.make_decoded(tag_name)
-        rtn_dict['page'] = page
-        rtn_dict['pages'] = pages
-
-        rtn_dict['tag_info'] = {
-            'number_of_photos': self.get_photo_count_by_tag(tag_name)
-        }
-
-        return rtn_dict
-
     def get_entity_by_tag(self, entity, tag_name):
         """
         Get all the photos that are associated with a particular tag.
@@ -598,10 +359,48 @@ class Tag(object):
 
         return [rtn_dict]
 
+    def add_tag(self, tags):
+        current_tags = self.get_all_tags()
+
+        print('current_tags \n',
+              current_tags)
+
+        if isinstance(tags, list):
+            for tag in tags:
+                if tag not in current_tags:
+                    self.db.make_query(
+                        '''
+                    insert into tag (tag_name, username, posts)
+                    values ("{}", "{}", {})
+                    '''.format(
+                            tag,
+                            'a',
+                            1
+                        )
+                    )
+
+        elif tag not in current_tags:
+            self.db.make_query(
+                '''
+                    insert into tag (tag_name, username, posts)
+                    values ("{}", "{}", {})
+                    '''.format(
+                    tag,
+                    'a',
+                    1
+                )
+            )
+
+        pass
+
 
 if __name__ == "__main__":
     t = Tag()
     # print(t.get_count_by_tag('post_id', 'post', 'post_tag', 'test'))
     # print(t.get_entity_tags('post', 1431516958))
 
-    print(t.get_entity_by_tag('post', 'test'))
+    # print(t.get_entity_by_tag('post', 'test'))
+
+    # t.add_tag(['test'])
+
+    print(t.get_all_tag_names())
