@@ -133,6 +133,9 @@ class Post(object):
             if tag_data:
                 data[0]['tags'] = tag_data
 
+                h_tag_list = t.get_all_tag_names()
+                data[0]['human_readable_tags'] = h_tag_list
+
         return data
 
     def get_and_set_post(self, post_id):

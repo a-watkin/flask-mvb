@@ -403,9 +403,14 @@ class Tag(object):
             return True
         return False
 
+    # def data_for_edit_tag(self):
+
 
 if __name__ == "__main__":
     t = Tag()
+
+    print(t.get_all_tag_names())
+
     # t.add_tags_to_post(1431516958, ['apples', 'oranges'])
 
-    t.add_tags_to_post(2754678461, 'test')
+    # t.add_tags_to_post(2754678461, 'test')
