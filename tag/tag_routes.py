@@ -24,6 +24,7 @@ tag_blueprint = Blueprint('tag', __name__)
 @tag_blueprint.route('/', methods=['GET'])
 def get_all_tags():
     t = Tag()
+    t.remove_orphaned_tags()
     tags = t.get_all_tags()
 
     print(tags)
