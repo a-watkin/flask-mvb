@@ -23,9 +23,9 @@ class Database(object):
             return False
 
     def make_sanitized_query(self, query_string, data=None):
-        print('make_sanitized_query')
-        print(query_string)
-        print(data)
+        # print('make_sanitized_query')
+        # print(query_string)
+        # print(data)
 
         with sqlite3.connect(os.path.join(self.db_name)) as connection:
             c = connection.cursor()
@@ -69,7 +69,7 @@ class Database(object):
         return [dict(ix) for ix in q_data]
 
     def get_query_as_list(self, query_string):
-        print('get_query_as_list called', query_string)
+        # print('get_query_as_list called', query_string)
         q_data = None
         with sqlite3.connect(self.db_name) as connection:
             c = connection.cursor()

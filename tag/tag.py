@@ -360,32 +360,20 @@ class Tag(object):
         return [rtn_dict]
 
     def add_tags_to_post(self, post_id, tags):
-        self.add_tags(tags)
-        if isinstance(tags, list):
-            for tag in tags:
-                self.add_to_post_tag(post_id, tags)
-        else:
-            self.add_to_post_tag(post_id, tags)
-
-    def add_tags(self, tags):
         current_tags = self.get_all_tag_names()
 
-        print('current_tags \n',
-              current_tags)
+        # If the tag is not in the tag table
+        for tag in tags:
+            if tag not in current_tags:
+                print('inserting tag ', tag)
+                self.insert_tag(tag)
+                self.add_to_post_tag(post_id, tag)
 
-        if isinstance(tags, list):
-            print('multiple tags, ', tags)
-            for tag in tags:
-                if tag not in current_tags:
-                    print('inserting tag ', tag)
-                    self.insert_tag(tag)
+            # If the tag is in the tag table
+            elif tag in current_tags:
+                self.add_to_post_tag(post_id, tag)
 
-        # here the tags variable holds a single string
-        elif tags not in current_tags:
-            print('here?')
-            self.insert_tag(tags)
-
-    def insert_tag(self, tag, username=None, posts=None):
+    def insert_tag(self, tag):
         self.db.make_query(
             '''
         insert into tag (tag_name, username, posts)
@@ -399,21 +387,25 @@ class Tag(object):
 
     def add_to_post_tag(self, post_id, tag_name):
         print('add_to_post_tag', post_id, tag_name)
-        # query_string = '''
-        #     INSERT INTO post_tag (post_id, tag_name)
-        #     VALUES (?, ?)
-        #     '''
+        query_string = '''
+            INSERT INTO post_tag (post_id, tag_name)
+            VALUES (?, ?)
+            '''
 
-        # data = (
-        #     post_id,
-        #     tag_name
-        # )
+        data = (
+            post_id,
+            tag_name
+        )
 
-        # if self.db.make_sanitized_query(query_string, data):
-        #     return True
-        # return False
+        print('data values are ', data)
+
+        if self.db.make_sanitized_query(query_string, data):
+            return True
+        return False
 
 
 if __name__ == "__main__":
     t = Tag()
-    t.add_tags_to_post(2311729335, ['apples', 'oranges'])
+    # t.add_tags_to_post(1431516958, ['apples', 'oranges'])
+
+    t.add_tags_to_post(2754678461, 'test')

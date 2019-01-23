@@ -51,14 +51,12 @@ def create_post():
         # get the values
         title = request.form['title']
         content = request.form['content']
+
+        # Tag data
         tags = request.form['tags']
-
-        print('\n', tags, type(tags))
         tags_data = tags.split(',')
-        # tag1, tag2, tag three
-        p = Post(title=title, content=content)
 
-        print('post_id', p.post_id)
+        p = Post(title=title, content=content)
 
         if 'publish' in request.form:
             publish = datetime.datetime.now()
@@ -66,8 +64,9 @@ def create_post():
 
         p.create_post()
 
+        # Add tags to the post
         t = Tag()
-        t.add_tags_to_post(tags_data, p.post_id)
+        t.add_tags_to_post(p.post_id, tags_data)
 
         if p.get_post(p.post_id):
             # if you have a status code here it doesn't redirect
@@ -94,6 +93,10 @@ def edit_post(post_id):
         title = request.form['title']
         content = request.form['content']
 
+        # Tag data
+        tags = request.form['tags']
+        tags_data = tags.split(',')
+
         if 'publish' in request.form:
             publish = datetime.datetime.now()
             p.datetime_published = publish
@@ -105,6 +108,10 @@ def edit_post(post_id):
         p.content = content
 
         p.update_post(post_id)
+
+        # Add tags to the post
+        t = Tag()
+        t.add_tags_to_post(p.post_id, tags_data)
 
         if p.get_post(p.post_id):
             # if you have a status code here it doesn't redirect
