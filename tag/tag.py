@@ -27,6 +27,16 @@ class Tag(object):
     def __init__(self):
         self.db = Database()
 
+    # get by tag
+
+    # create tag
+
+    # delete tag
+
+    # count by tag
+
+    # get all tags
+
     def get_count_by_tag(self, entity_id, entity_table, tag_table, tag_name):
         """
         Entity table is the table of the thing you want the count for, e.g. post, photo, project etc
@@ -442,22 +452,33 @@ class Tag(object):
 
         return tag_data
 
+    def count_posts_by_tag(self, tag_name):
+        count = self.db.get_query_as_list(
+            '''
+            select count(post_id) from post
+            join post_tag using(post_id)
+            where tag_name = '{}'
+            '''.format(tag_name)
+        )
+
+        if count:
+            return count[0]['count(post_id)']
+
+    def remove_orphaned_tags(self):
+        tags = self.get_all_tag_names()
+
+        for tag in tags:
+            if self.count_posts_by_tag(tag) < 1:
+                print(tag, ' needs to be removed')
+
+                self.db.make_query(
+                    '''
+                    DELETE FROM tag WHERE tag_name = "{}"
+                    '''.format(tag)
+                )
+
 
 if __name__ == "__main__":
     t = Tag()
 
-    # print(t.get_all_tag_names())
-
-    # print(t.get_entity_tags('post', 2789896248))
-
-    # print(t.entity_tag_list(2789896248))
-
-    # t.remove_post_tags(2789896248)
-
-    # t.add_tags_to_post(1431516958, ['apples', 'oranges'])
-
-    # t.add_tags_to_post(2754678461, 'test')
-
-    # print(t.get_entity_by_tag('post', 'tag'))
-
-    print(t.get_all_tags())
+    print(t.remove_orphaned_tags())
