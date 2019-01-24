@@ -2,6 +2,8 @@
 
 As the name suggest this is a simple blog.
 
+It uses my own schema and tagging system. The tagging system is kind of a mess at the moment.
+
 Uses
 
 1. Flask
