@@ -1,9 +1,14 @@
-Click==7.0
-Flask==1.0.2
-itsdangerous==1.1.0
-Jinja2==2.10
-Markdown==3.0.1
-MarkupSafe==1.1.0
-mistune==0.8.4
-passlib==1.7.1
-Werkzeug==0.14.1
+Package      Version
+------------ -------
+Click        7.0    
+Flask        1.0.2  
+itsdangerous 1.1.0  
+Jinja2       2.10   
+Markdown     3.0.1  
+MarkupSafe   1.1.0  
+mistune      0.8.4  
+passlib      1.7.1  
+pip          18.1   
+setuptools   40.6.3 
+Werkzeug     0.14.1 
+wheel        0.32.3 
