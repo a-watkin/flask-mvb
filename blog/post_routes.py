@@ -18,10 +18,10 @@ except Exception as e:
     from common.utils import login_required
     from tag.tag import Tag
 
-post_blueprint = Blueprint('posts', __name__)
+blog_blueprint = Blueprint('blog', __name__)
 
 
-@post_blueprint.route('blog/', methods=['GET'])
+@blog_blueprint.route('/', methods=['GET'])
 def get_posts():
     p = Post()
     posts = p.get_posts()
@@ -31,7 +31,7 @@ def get_posts():
     return render_template('blog/posts.html', posts=posts), 200
 
 
-@post_blueprint.route('/<int:post_id>', methods=['GET'])
+@blog_blueprint.route('/<int:post_id>', methods=['GET'])
 def get_post(post_id):
     p = Post()
     post = p.get_post(post_id)
@@ -41,7 +41,7 @@ def get_post(post_id):
     return render_template('blog/post.html', post=post), 200
 
 
-@post_blueprint.route('/new/', methods=['GET', 'POST'])
+@blog_blueprint.route('/new/', methods=['GET', 'POST'])
 @login_required
 def create_post():
     print('hello from create post ')
@@ -70,12 +70,12 @@ def create_post():
 
         if p.get_post(p.post_id):
             # if you have a status code here it doesn't redirect
-            return redirect(url_for('posts.get_posts'))
+            return redirect(url_for('blog.get_posts'))
         else:
             return 'Oh no something went wrong :(', 404
 
 
-@post_blueprint.route('/edit/<int:post_id>', methods=['GET', 'POST'])
+@blog_blueprint.route('/edit/<int:post_id>', methods=['GET', 'POST'])
 @login_required
 def edit_post(post_id):
     if request.method == 'GET':
@@ -115,20 +115,20 @@ def edit_post(post_id):
 
         if p.get_post(p.post_id):
             # if you have a status code here it doesn't redirect
-            return redirect(url_for('posts.edit_post', post_id=p.post_id))
+            return redirect(url_for('blog.edit_post', post_id=p.post_id))
         else:
             return 'Oh no something went wrong :(', 404
 
 
-@post_blueprint.route('/delete/<int:post_id>', methods=['GET', 'POST'])
+@blog_blueprint.route('/delete/<int:post_id>', methods=['GET', 'POST'])
 @login_required
 def delete_post(post_id):
     p = Post()
     p.remove_post(post_id)
-    return redirect(url_for('posts.get_posts'))
+    return redirect(url_for('blog.get_posts'))
 
 
-@post_blueprint.route('/deleted', methods=['GET', 'POST'])
+@blog_blueprint.route('/deleted', methods=['GET', 'POST'])
 @login_required
 def deleted_posts():
     p = Post()
@@ -136,26 +136,26 @@ def deleted_posts():
     return render_template('blog/deleted_posts.html', posts=deleted_posts)
 
 
-@post_blueprint.route('/undelete/<int:post_id>', methods=['GET'])
+@blog_blueprint.route('/restore/<int:post_id>', methods=['GET'])
 @login_required
 def restore_post(post_id):
     print('\n\nwhat is the request', request.method, '\n\n')
     p = Post()
     p.restore_post(post_id)
-    return redirect(url_for('posts.deleted_posts'))
+    return redirect(url_for('blog.deleted_posts'))
 
 
-@post_blueprint.route('/purge', methods=['GET'])
+@blog_blueprint.route('/purge', methods=['GET'])
 @login_required
 def purge_deleted_posts():
     p = Post()
     p.purge_deleted_posts()
-    return redirect(url_for('posts.get_posts'))
+    return redirect(url_for('blog.get_posts'))
 
 
-@post_blueprint.route('/delete/all', methods=['GET'])
+@blog_blueprint.route('/delete/all', methods=['GET'])
 @login_required
 def delete_all_posts():
     p = Post()
     p.delete_all_posts()
-    return redirect(url_for('posts.get_posts'))
+    return redirect(url_for('blog.get_posts'))

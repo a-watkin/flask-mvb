@@ -40,6 +40,7 @@
       post[0]["human_readable_tags"] %} value="{{ post[0]["human_readable_tags"]|join(", ")
 
 
+
       }}" {% endfor %} {% else %} placeholder="Enter tags here..." {% endif %}
       aria-label="Tags" aria-describedby="basic-addon2" />
 
@@ -54,7 +55,7 @@
       >
       <div class="row">
         <div class="col">
-          <a href="{{ url_for('posts.get_posts') }}">
+          <a href="{{ url_for('blog.get_posts') }}">
             <button type="button" class="btn btn-primary btn-block btn-lg">
               Back
             </button>

@@ -4,15 +4,14 @@
 {% block content %}
 
 <div class="row">
-    <div class="col">
-        <a href="{{ url_for('posts.get_posts') }}">
-            <button class="btn btn-primary btn-lg button-spacing">
-                Back to posts
-            </button>
-        </a>
-    </div>
+  <div class="col">
+    <a href="{{ url_for('blog.get_posts') }}">
+      <button class="btn btn-primary btn-lg button-spacing">
+        Back to posts
+      </button>
+    </a>
+  </div>
 </div>
-
 
 <!-- check session -->
 {% if session %}
@@ -25,7 +24,6 @@
 
 <div class="row">
   <div class="col blog-card">
-
     <div class="row">
       <div class="col">
         <h2 class="title text-center">{{ post["title"] }}</h2>
@@ -43,35 +41,31 @@
           Posted @ {{ post["datetime_posted"][0:16] }}
         </h6>
       </div>
-
     </div>
 
     <div class="row">
-
-    <div class="col text-right">
-        <a href="/posts/undelete/{{ post["post_id"] }}">
-            <button class="btn btn-warning btn-lg button-spacing">Restore post</button>
+      <div class="col text-right">
+        <a href="{{url_for('blog.restore_post', post_id=post['post_id'])}}">
+          <button class="btn btn-warning btn-lg button-spacing">
+            Restore post
+          </button>
         </a>
+      </div>
     </div>
-    </div>
-
-
-
   </div>
 </div>
 
 <!-- end for loop -->
 {% endfor %}
 
-
 <div class="row">
-    <div class="col text-center">
-        <a href="{{ url_for('posts.purge_deleted_posts') }}">
-            <button class="btn btn-danger btn-lg button-spacing">
-                PURGE ALL DELETED POSTS
-            </button>
-        </a>
-    </div>
+  <div class="col text-center">
+    <a href="{{ url_for('blog.purge_deleted_posts') }}">
+      <button class="btn btn-danger btn-lg button-spacing">
+        PURGE ALL DELETED POSTS
+      </button>
+    </a>
+  </div>
 </div>
 
 <!-- no data -->

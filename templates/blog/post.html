@@ -61,14 +61,14 @@
       <div class="col text-right">
         <a
           class="edit-link"
-          href="{{ url_for('posts.edit_post', post_id=post[0]['post_id']) }}"
+          href="{{ url_for('blog.edit_post', post_id=post[0]['post_id']) }}"
         >
           <i class="far fa-edit fa-1x"></i>
         </a>
 
         <a
           class="edit-link"
-          href="{{ url_for('posts.delete_post', post_id=post[0]['post_id']) }}"
+          href="{{ url_for('blog.delete_post', post_id=post[0]['post_id']) }}"
         >
           <i class="far fa-trash-alt fa-1x"></i>
         </a>

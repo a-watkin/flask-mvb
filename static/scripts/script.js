@@ -9,7 +9,7 @@ jQuery(document).ready(function($) {
         .html();
 
       if (postID !== undefined) {
-        window.location = "/posts/" + postID;
+        window.location = "/blog/" + postID;
       }
     }
   });
