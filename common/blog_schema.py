@@ -13,16 +13,6 @@ def create_database(db_name):
         '''
     )
 
-    # ALTER
-    # cursor.execute(
-    #     '''
-    #     CREATE TABLE IF NOT EXISTS user(
-    #         username TEXT PRIMARY KEY UNIQUE NOT NULL,
-    #         hash TEXT NULL
-    #     );
-    #     '''
-    # )
-
     cursor.execute(
         '''
         CREATE TABLE IF NOT EXISTS post(
@@ -76,4 +66,4 @@ def create_database(db_name):
 
 if __name__ == "__main__":
     pass
-    # create_database('minimal_viable_blog.db')
+    # create_database('test2.db')
