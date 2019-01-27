@@ -53,7 +53,7 @@ if __name__ == '__main__':
     if DEVELOPMENT:
         app.run(
             debug=True,
-            port=5050
+            port=5151
         )
     else:
         app.run(

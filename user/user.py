@@ -37,7 +37,7 @@ class User(object):
 
         # print(db_resp)
         if db_resp:
-            return db_resp[0]['hash']
+            return db_resp[0]['hash_value']
         # changed here because the db no longer returns a tuple
         # return db_resp[2]
 

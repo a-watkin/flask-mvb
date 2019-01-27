@@ -6,14 +6,22 @@ def create_database(db_name):
     conn = sqlite3.connect(db_name)
     cursor = conn.cursor()
 
+    # User table
     cursor.execute(
         '''
-        CREATE TABLE IF NOT EXISTS user(
-            username TEXT PRIMARY KEY UNIQUE NOT NULL,
-            hash TEXT NULL
-        );
+        CREATE TABLE user( user_id TEXT PRIMARY KEY UNIQUE NOT NULL, username TEXT NOT NULL, hash_value TEXT NULL )
         '''
     )
+
+    # ALTER
+    # cursor.execute(
+    #     '''
+    #     CREATE TABLE IF NOT EXISTS user(
+    #         username TEXT PRIMARY KEY UNIQUE NOT NULL,
+    #         hash TEXT NULL
+    #     );
+    #     '''
+    # )
 
     cursor.execute(
         '''
