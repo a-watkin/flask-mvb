@@ -52,7 +52,7 @@ class User(object):
         """
         db_resp = self.db.get_row('user', 'username', self.username)
 
-        # print(db_resp)
+        print(db_resp)
         if db_resp:
             return db_resp[0]['hash_value']
         # changed here because the db no longer returns a tuple
@@ -69,7 +69,7 @@ class User(object):
         self.db.make_query(
             '''
             UPDATE user 
-            SET hash = "{}"
+            SET hash_value = "{}"
             WHERE username = "{}"
             '''.format(hased_password, self.username)
         )
@@ -85,9 +85,9 @@ class User(object):
         """
         self.db.make_query(
             '''
-            INSERT INTO user (username)
-            VALUES ("{}")
-            '''.format(self.username)
+            INSERT INTO user (username, user_id)
+            VALUES ("{}", "{}")
+            '''.format(self.username, self.user_id)
         )
 
         self.insert_hased_password(self.password)
