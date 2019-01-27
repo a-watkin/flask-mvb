@@ -1,24 +1,41 @@
 
 
+import os
+import sys
+
 try:
     from .blog_db import Database
-
     from .password_util import PasswordUtil
 except Exception as e:
+    print('import problem, ', e)
+    sys.path.append(os.getcwd())
     from common.db_interface import Database
-
     from common.password_util import PasswordUtil
 
 
 class User(object):
-    def __init__(self, username, password=None, _id=None):
+    def __init__(self, username, password=None, user_id=None):
         self.username = username
+        self.user_id = '9604217@N03'
         self.password = password
-        self.user_id = None
         # init database
         self.db = Database()
 
     # check if username exists
+
+    def __str__(self):
+        return """
+        A user: \n
+        username: {}\n
+        user_id: {}\n
+        password: {}\n
+        using db: {}\n
+        """.format(
+            self.username,
+            self.user_id,
+            self.password,
+            self.db.db_name
+        )
 
     def check_for_username(self):
         """
@@ -78,12 +95,13 @@ class User(object):
 
 def main():
     u = User('a', 'a')
+    print(u)
     # hased password has been inserted
     # print(u.get_hashed_password('a'))
 
     # print(u.check_password())
 
-    u.insert_user()
+    # u.insert_user()
     # u.insert_hased_password(u.password)
 
 

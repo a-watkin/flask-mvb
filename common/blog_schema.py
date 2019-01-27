@@ -65,5 +65,5 @@ def create_database(db_name):
 
 
 if __name__ == "__main__":
-    pass
-    # create_database('test2.db')
+    # pass
+    create_database('minimal_viable_blog.db')
